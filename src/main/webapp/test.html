@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Hello, World</title>
+<style type="text/css">
+html{height:100%}
+body{height:100%;margin:0px;padding:0px}
+#container{height:100%}
+
+#file {
+    position: relative;
+    opacity: 0;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file #file {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 999px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+div.fileinputs {
+	position: relative;
+}
+
+div.fakefile {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 1;
+}
+
+input.file {
+	position: relative;
+	text-align: right;
+	-moz-opacity:0 ;
+	filter:alpha(opacity: 0);
+	opacity: 0;
+	z-index: 2;
+}
+
+</style>
+
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=gKuzyexnoAke3QEEf0qOuVj6"></script>
+
+</head>
+ 
+<body>
+
+<!-- <div class="fileinputs"> -->
+<!-- 	<input type="file" class="file" /> -->
+<!-- 	<div class="fakefile"> -->
+<!-- 		<input /> -->
+<!--         <img data-src="holder.js/200x200/empty"> -->
+<!-- 	</div> -->
+<!-- </div> -->
+
+<!-- <div style="position:relative;"> -->
+<!--   <a class='btn btn-primary' href='javascript:;'> -->
+<!--     Choose File... -->
+<!--     <input type="file" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' name="file_source" size="40"  onchange='$("#upload-file-info").html($(this).val());'> -->
+<!--   </a> -->
+<!--   &nbsp; -->
+<!--   <span class='label label-info' id="upload-file-info"></span> -->
+<!-- </div> -->
+
+
+
+
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-3 img-add">
+      <img data-src="holder.js/200x200/empty" class="btn-file" onclick="document.getElementById('file').click()">
+      <input type="file" name="file" id="file" onchange="addPhoto(this)" style="display:none"/>
+    </div>
+    
+  </div>
+
+  <img data-src="holder.js/200x200/size: 80">
+
+</div>
+
+<script src="js/holder.js"></script>
+<script type="text/javascript">
+  Holder.add_theme("add", {text: "+", size: 80, background: "silver", foreground: "gray"}).run();
+  Holder.add_theme("empty", {text: "No Image", size: 15, background: "silver", foreground: "gray"}).run();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Climbing Road Book start page">
+    <meta name="author" content="Regis Xu">
+    <!-- add site ico here -->
+    <!--link rel="shortcut icon" href="../../assets/ico/favicon.ico"-->
+
+    <title>Online Climbing Road Book</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+<!-- Button trigger modal -->
+<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+Map
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Please mark location</h4>
+      </div>
+      <div class="modal-body">
+        <iframe id="mframe" src="map-frame.html" width="800px" height="600px">
+        </iframe>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<script src="js/jquery-2.1.0.min.js"></script>
+<script src="js/bootstrap.min.js"/></script>
+
+<script>
+
+$("#myModal").on("shown.bs.modal", function(e) {
+
+    frames[0].showMap("map")
+
+});
+
+
+</script>
+
+</body>
+
+</html>

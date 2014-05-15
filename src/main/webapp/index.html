@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+<title>Road Book Online</title>
+<style>
+
+</style>
+
+</head>
+<body>
+
+<span>
+  <input type="text" id="query" onkeypress="pressEnter(event, this.value)" />
+</span>
+
+<div>
+  <table id="list">
+  </table>
+</div>
+
+<script src="js/d3.v3.min.js"></script>
+<script src="js/show.js"></script>
+<script src="js/search.js"></script>
+
+<script>
+  function pressEnter(e, value) {
+    if(e.keyCode != 13) {
+      return;
+    }
+    search(value);
+  }
+</script>
+</body>

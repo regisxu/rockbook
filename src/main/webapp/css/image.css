@@ -1,0 +1,43 @@
+.img-add {
+    cursor: pointer;
+}
+
+.img-wrap {
+    overflow:hidden;
+    position:relative;
+    width:200px;
+    height:200px;
+}
+
+.img-overlay {
+    padding:0px 5px;
+    text-align:right;
+    right:0;
+    top:0;
+    color:black;
+    opacity:0;
+    filter: alpha(opacity = 0);
+    position:absolute;
+    width:100%;
+    height:100%;
+    z-index:1000;
+}
+
+.img-wrap:hover .img-overlay {
+    opacity:0.75;
+    filter: alpha(opacity = 75);
+    transition:opacity 0.25s;
+    -moz-transition:opacity 0.25s;
+    -webkit-transition:opacity 0.25s;
+}
+
+.x-close {
+    text-decoration: none;
+    font-family:Helvetica;
+    font-weight:900;
+    color:#CC3300;
+    font-size:30px;
+}
+.x-close:hover {
+    text-decoration: none;
+}
