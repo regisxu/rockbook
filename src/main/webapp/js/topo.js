@@ -10,10 +10,10 @@
 
 
 function click(event) {
-    var rout = document.getElementById("rout1");
+    var rout = document.querySelector(".route");
     var path = rout.querySelector("path");
     var p = cursorPoint(event.clientX, event.clientY);
-    path.setAttribute("d", path.getAttribute("d") + "L " + p.x + " " + p.y + " " + " M " + p.x + " " + p.y);
+    path.setAttribute("d", path.getAttribute("d") + " L " + p.x + " " + p.y + " " + " M " + p.x + " " + p.y);
     var point = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     point.setAttribute("cx", p.x);
     point.setAttribute("cy", p.y);
@@ -27,13 +27,13 @@ function cursorPoint(x, y) {
     var pt = document.querySelector("svg").createSVGPoint();
     pt.x = x;
     pt.y = y;
-    return pt.matrixTransform(svg.getScreenCTM().inverse());
+    return pt.matrixTransform(document.querySelector("svg").getScreenCTM().inverse());
 }
 
 function buildTopo(topo) {
     var pic = topo.pic;
     var routes = topo.routes;
-x
+
     var svg = d3.select('body')
         .append('svg')
         .attr('width', pic.width)
@@ -55,13 +55,14 @@ x
         .attr("x", "0")
         .attr("y", "0")
         .attr("width", pic.width)
-        .attr("height", pic.height);
-
+        .attr("height", pic.height)
+        .attr("onclick", "click(evt)");
 
     for (var i = 0; i < routes.length; ++i) {
 
         var route = svg.append("g")
-            .attr("id", routes[i].id);
+            .attr("id", routes[i].id)
+            .attr("class", "route");
         
         route.selectAll("circle").data(routes[i].bolts).enter().append("svg:circle")
             .attr("cx", function(d) { return d.x; })
