@@ -9,9 +9,9 @@
     <g>
         <rect fill="url(#img1)"  x="0" y="0" width="960" height="600"/>
         <g id="rout1">
-            <path id="path1" d="M 0 0 l 100 100 l 150 200" stroke="red" stroke-width="3" />
-            <circle id="p1" cx="100" cy="100" r="5" stroke="red"/>
-            <circle id="p2" cx="150" cy="200" r="5" stroke="red"/>
+            <path id="path1" d="M 0 0 L 100 100 M 100 100 L 150 200" stroke="red" stroke-width="3" />
+            <circle id="p1" cx="100" cy="100" r="5" stroke="red" fill="red"/>
+            <circle id="p2" cx="150" cy="200" r="5" stroke="red" fill="red"/>
         </g>
     </g>
 </svg>

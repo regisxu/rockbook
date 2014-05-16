@@ -1,0 +1,92 @@
+// Find your root SVG element
+//var svg = document.querySelector("svg");
+//var svg = buildTopo({id:"iG-9ey5sMSm-l5XT", width:"960", height:"1260"}, [{id:"tes1", "bolts":[{x:100, y:100}, {x:150, y:200}]}]);
+
+//document.getElementsByTagName("body")[0].appendChild(svg);
+
+// Create an SVGPoint for future math
+//var pt = svg.createSVGPoint();
+
+
+
+function click(event) {
+    var rout = document.getElementById("rout1");
+    var path = rout.querySelector("path");
+    var p = cursorPoint(event.clientX, event.clientY);
+    path.setAttribute("d", path.getAttribute("d") + "L " + p.x + " " + p.y + " " + " M " + p.x + " " + p.y);
+    var point = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    point.setAttribute("cx", p.x);
+    point.setAttribute("cy", p.y);
+    point.setAttribute("r", "4");
+    point.setAttribute("stroke", "red");
+    point.setAttribute("fill", "red");
+    rout.appendChild(point);
+}
+
+function cursorPoint(x, y) {
+    var pt = document.querySelector("svg").createSVGPoint();
+    pt.x = x;
+    pt.y = y;
+    return pt.matrixTransform(svg.getScreenCTM().inverse());
+}
+
+function buildTopo(topo) {
+    var pic = topo.pic;
+    var routes = topo.routes;
+x
+    var svg = d3.select('body')
+        .append('svg')
+        .attr('width', pic.width)
+        .attr('height', pic.height);
+    svg.append("svg:defs").append("pattern")
+        .attr("id", pic.id)
+        .attr("patternUnits", "userSpaceOnUse")
+        .attr("width", pic.width)
+        .attr("height", pic.height)
+        .append("svg:image")
+        .attr("xlink:href", "../api/image/" + pic.id)
+        .attr("x", "0")
+        .attr("y", "0")
+        .attr("width", pic.width)
+        .attr("height", pic.height);
+
+    svg.append("svg:rect")
+        .attr("fill", "url(#" + pic.id + ")")
+        .attr("x", "0")
+        .attr("y", "0")
+        .attr("width", pic.width)
+        .attr("height", pic.height);
+
+
+    for (var i = 0; i < routes.length; ++i) {
+
+        var route = svg.append("g")
+            .attr("id", routes[i].id);
+        
+        route.selectAll("circle").data(routes[i].bolts).enter().append("svg:circle")
+            .attr("cx", function(d) { return d.x; })
+            .attr("cy", function(d) { return d.y; })
+            .attr("r", "4")
+            .attr("stroke", "red")
+            .attr("fill", "red");
+
+        route.append("svg:path")
+            .attr("stroke", "red")
+            .attr("stroke-width", "2")
+            .attr("d", calculatePath(routes[i].bolts));
+
+    }
+
+}
+
+
+function calculatePath(bolts) {
+    var path = "";
+    for (var i = 0; i < bolts.length; ++i) {
+        if (i == 0) {
+            path += "M " + bolts[i].x + " " + bolts[i].y;
+        }
+        path += " L " + bolts[i].x + " " + bolts[i].y + " M " + bolts[i].x + " " + bolts[i].y;
+    }
+    return path;
+}

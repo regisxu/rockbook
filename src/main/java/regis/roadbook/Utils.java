@@ -206,6 +206,6 @@ public class Utils {
 
     public static void main(String[] args) {
         System.out.println(id(oid(id(new ObjectId("530d7daa93b22bf6689478b8")))));
-        System.out.println();
+        System.out.println(id(new ObjectId("52f5915c843ac3a67d2a7aef")));
     }
 }

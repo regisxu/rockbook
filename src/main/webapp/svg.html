@@ -3,25 +3,11 @@
 
 <h1>My first SVG</h1>
 
-<svg width="960" height="600" version="1.1" baseProfile="full" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events">
-    <title>Text Pattern Fill Example</title>
-    <defs>
-        <pattern id="img1" patternUnits="userSpaceOnUse" width="960" height="600">
-            <image xlink:href="52f5915c843ac3a67d2a7aef.jpg" x="0" y="0"  width="960" height="600"/>
-        </pattern>
-    </defs>
-
-        <rect fill="url(#img1)"  x="0" y="0" width="960" height="600" onclick="click(evt)"/>
-        <g id="rout1">
-            <path id="path1" d="M 0 0 L 100 100 M 100 100 L 150 200 M 150 200" stroke="red" stroke-width="2" />
-            <circle id="p1" cx="100" cy="100" r="4" stroke="red" fill="red"/>
-            <circle id="p2" cx="150" cy="200" r="4" stroke="red" fill="red"/>
-        </g>
-
-    <script type="text/ecmascript" xlink:href="topo.js"/>
-    <script type="text/ecmascript">
-    </script>
-</svg>
+<script src="js/d3.v3.min.js"></script>
+<script src="js/topo.js"></script>
+<script>
+  buildTopo({pic:{id:"iG-9ey5sMSm-l5XT", height:"960", width:"1536"}, routes:[{id:"tes1", "bolts":[{x:0, y:0}, {x:100, y:100}, {x:150, y:200}]}]});
+</script>
 
 </body>
 </html> 
