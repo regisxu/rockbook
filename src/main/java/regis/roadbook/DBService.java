@@ -66,4 +66,13 @@ public class DBService {
         }
         return result;
     }
+
+    public BasicDBList query(String col, BasicDBObject obj, BasicDBObject keys) {
+        DBCursor cursor = db.getCollection(col).find(obj, keys);
+        BasicDBList result = new BasicDBList();
+        while (cursor.hasNext()) {
+            result.add(cursor.next());
+        }
+        return result;
+    }
 }

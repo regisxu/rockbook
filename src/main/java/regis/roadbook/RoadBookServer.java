@@ -22,6 +22,7 @@ public class RoadBookServer {
         context.addServlet(new ServletHolder(new RouteServlet()), "/route/*");
         context.addServlet(new ServletHolder(new SearchServlet()), "/search");
         context.addServlet(new ServletHolder(new UserServlet()), "/user/*");
+        context.addServlet(new ServletHolder(new TopoServlet()), "/topo/*");
         ServletHolder holder = new ServletHolder(new ImageService());
         holder.getRegistration().setMultipartConfig(new MultipartConfigElement("images", 1024 * 1024 * 8, 1024 * 1024 * 10, 1024 * 1024 * 8));
         context.addServlet(holder, "/image/*");
