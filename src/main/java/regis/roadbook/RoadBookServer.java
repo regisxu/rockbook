@@ -17,7 +17,7 @@ public class RoadBookServer {
         Server server = new Server(8889);
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/api");
-        context.addFilter(AuthenticationFilter.class, "/*", EnumSet.of(DispatcherType.FORWARD, DispatcherType.REQUEST));
+//        context.addFilter(AuthenticationFilter.class, "/*", EnumSet.of(DispatcherType.FORWARD, DispatcherType.REQUEST));
         context.addServlet(new ServletHolder(new WallServlet()), "/wall/*");
         context.addServlet(new ServletHolder(new RouteServlet()), "/route/*");
         context.addServlet(new ServletHolder(new SearchServlet()), "/search");
