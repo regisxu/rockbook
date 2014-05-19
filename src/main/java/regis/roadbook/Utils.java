@@ -5,9 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.BitSet;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Base64;
 
 import org.bson.types.ObjectId;
 
@@ -15,36 +13,6 @@ import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 
 public class Utils {
-
-    private static char[] itoc = new char[64];
-
-    private static Map<Character, Integer> ctoi = new HashMap<>();
-
-    static {
-        init();
-    }
-
-    private static void init() {
-        int i = 0;
-        for (; i < 10; ++i) {
-            itoc[i] = (char) ('0' + i);
-        }
-
-        for (char j = 'a'; j <= 'z'; ++j, ++i) {
-            itoc[i] = j;
-        }
-
-        for (char j = 'A'; j <= 'Z'; ++j, ++i) {
-            itoc[i] = j;
-        }
-
-        itoc[i++] = '-';
-        itoc[i++] = '_';
-
-        for (int j = 0; j < itoc.length; ++j) {
-            ctoi.put(itoc[j], j);
-        }
-    }
 
     public static String readString(Reader reader) throws IOException {
         BufferedReader r = null;
@@ -153,59 +121,20 @@ public class Utils {
         if (id == null) {
             return null;
         }
-        BitSet bits = new BitSet(96);
-        byte[] bs = new byte[12];
-
-        for (int i = 0; i < id.length(); ++i) {
-            int v = ctoi.get((char) id.charAt(i));
-            for (int j = i * 6; j < 96; ++j) {
-                if ((v & 32) == 32) {
-                    bits.set(j);
-                    setBit(bs, j, ((v & 32) == 32) ? 1 : 0);
-                }
-                v <<= 1;
-            }
-        }
-        return new ObjectId(bits.toByteArray());
+        return new ObjectId(Base64.getUrlDecoder().decode(id));
     }
 
     public static String id(ObjectId oid) {
         if (oid == null) {
             return null;
         }
-        StringBuilder id = new StringBuilder();
-        byte[] bs = oid.toByteArray();
-
-        for (int i = 0; i < bs.length * 8;) {
-            int v = 0;
-            for (int j = 0; j < 6; ++j, ++i) {
-                v = (v << 1) | getBit(bs, i);
-            }
-            id.append(itoc[v]);
-        }
-        return id.toString();
-    }
-
-    private static int getBit(byte[] bs, int i) {
-        if (i >= bs.length * 8) {
-            throw new IndexOutOfBoundsException("index " + i + " out of length " + (bs.length * 8));
-        }
-        return (bs[i / 8] >> (i % 8)) & 1;
-    }
-
-    private static void setBit(byte[] bs, int i, int v) {
-        if (i >= bs.length * 8) {
-            throw new IndexOutOfBoundsException("index " + i + " out of length " + (bs.length * 8));
-        }
-        if (v == 0) {
-            bs[i / 8] = (byte) ((bs[i / 8]) & (v >> (i % 8)));
-        } else if (v == 1) {
-            bs[i / 8] = (byte) ((bs[i / 8]) | (v >> (i % 8)));
-        }
+        return Base64.getUrlEncoder().encodeToString(oid.toByteArray());
     }
 
     public static void main(String[] args) {
         System.out.println(id(oid(id(new ObjectId("530d7daa93b22bf6689478b8")))));
+        System.out.println(oid(id(new ObjectId("530d7daa93b22bf6689478b8"))));
+        System.out.println(id(new ObjectId("530d7daa93b22bf6689478b8")));
         System.out.println(id(new ObjectId("52f5915c843ac3a67d2a7aef")));
     }
 }
