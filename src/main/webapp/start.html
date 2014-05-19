@@ -54,7 +54,7 @@
         <div class="input-group">
           <div class="input-group-btn">
             <button type="button" id="sbtn" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Route <span class="caret"></span></button>
-            <ul class="dropdown-menu dropdown-menu-right">
+            <ul class="dropdown-menu dropdown-menu-left" role="menu">
               <li><a href="javascript:selectRes('Route')">Route</a></li>
               <li><a href="javascript:selectRes('Wall')">Wall</a></li>
             </ul>
@@ -116,11 +116,12 @@
     }
 
     function selectRes(res) {
-        document.getElementById("sbtn").textContent = res;
-        search(document.getElementById('query').value + " res:" + res.toLowerCase())
+        document.querySelector("#sbtn").innerHTML = res + " <span class=\"caret\"></span>";
+        search("key:" + document.getElementById("query").value + " res:" + res.toLowerCase())
     }
+
     function submitSearch() {
-        search(document.getElementById('query').value + " res:" + document.getElementById("sbtn").textContent.toLowerCase())
+        search("key:" + document.getElementById("query").value + " res:" + document.getElementById("sbtn").textContent.toLowerCase())
     }
   </script>
 </html>

@@ -30,7 +30,12 @@ public class SearchServlet extends HttpServlet {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
-        BasicDBList list = db.query(res, new BasicDBObject(para));
+        String key = (String) para.remove("key");
+        BasicDBObject query = new BasicDBObject(para);
+        BasicDBObject qname = new BasicDBObject("$regex", key);
+        qname.put("$options", "i");
+        query.put("name", qname);
+        BasicDBList list = db.query(res, query);
         list.forEach(dbo -> Utils.json((BasicDBObject) dbo));
         response.getWriter().println(list);
         return;

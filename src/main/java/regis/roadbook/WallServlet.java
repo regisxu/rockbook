@@ -65,9 +65,12 @@ public class WallServlet extends HttpServlet {
         json.put("id", path);
 
         BasicDBObject dbObject = (BasicDBObject) db.query("wall", Utils.dbo(json)).get(0);
-        BasicDBObject imageQuery = new BasicDBObject("rid", dbObject.getObjectId("_id"));
-        BasicDBList images = db.query("image", imageQuery);
-        dbObject.append("images", images.stream().map(entry -> Utils.id(((BasicDBObject) entry).getObjectId("_id"))).toArray());
+        BasicDBList list = (BasicDBList) dbObject.get("images");
+        if (list != null && list.size() > 0) {
+            BasicDBObject imageQuery = new BasicDBObject("_id", new BasicDBObject("$in", list));
+            BasicDBList images = db.query("image", imageQuery);
+            dbObject.put("images", images);
+        }
         response.setContentType("application/json");
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().println(Utils.json(dbObject).toString());

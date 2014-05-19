@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Edit route page">
+  <meta name="author" content="Regis Xu">
+  <!-- add site ico here -->
+  <!--link rel="shortcut icon" href="../../assets/ico/favicon.ico"-->
+
+  <title>Edit Wall</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/start.css" rel="stylesheet">
+
+  <link href="css/image.css" rel="stylesheet">
+
+</head>
+<body>
+
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Climbing Road Book</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="/web/start.html">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+
+
+  <div class="container">
+    <div class="page-header">
+      <h1 class="name" >Wall</h1>
+    </div>
+
+    <form role="form" action="#" id="wall">
+      <div class="form-group">
+        <label>Wall Name *</label>
+        <input id="name" type="text" class="form-control" placeholder="Enter name">
+      </div>
+      <div class="form-group">
+        <label>Location</label>
+        <div class="input-group">
+          <span class="input-group-btn">
+            <!-- Button trigger modal -->
+            <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal">Map</button>
+          </span>
+          <input id="location" type="text" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+
+        <textarea id="desc" class="form-control" rows="3" placeholder="Enter descriptioin"></textarea>
+
+      </div>
+
+    </form>
+
+    <div>
+      <form id="photo" action="#">
+        <label>photos</label>
+        <p></p>
+        <div class="images row">
+          <div class="col-md-3 img-add">
+            <img class="img-thumbnail" onclick="document.getElementById('file').click()" style="width: 200px; height: 200px;" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0ic2lsdmVyIi8+PHRleHQgdGV4dC1hbmNob3I9Im1pZGRsZSIgeD0iMTAwIiB5PSIxMDAiIHN0eWxlPSJmaWxsOmdyYXk7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LXNpemU6ODBweDtmb250LWZhbWlseTpBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4rPC90ZXh0Pjwvc3ZnPg==">
+            <input type="file" name="file" id="file" onchange="addPhoto(this)" style="display:none"/>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-md-12">
+      <button type="submit" class="btn btn-success" onclick="submit()">Submit</button>
+    </div>
+
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="myModalLabel">Please mark location</h4>
+        </div>
+        <div class="modal-body">
+          <iframe id="mframe" src="map-frame.html" width="800px" height="600px">
+          </iframe>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" onclick="close()">Close</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="ok()">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script src="js/jquery-2.1.0.min.js"></script>
+<script src="js/bootstrap.min.js"/></script>
+<script src="js/d3.v3.min.js"></script>
+<script src="js/image.js"></script>
+<script src="js/editWall.js"></script>
+
+<script>
+
+show();
+
+$("#myModal").on("shown.bs.modal", function(e) {
+
+    frames[0].showMap("map", position.longitude, position.latitude)
+
+});
+
+function ok() {
+    position.longitude = frames[0].current.getPosition().lng;
+    position.latitude = frames[0].current.getPosition().lat;
+    document.getElementById("location").value = "" + position.longitude + "," + position.latitude;
+}
+
+</script>
+
+</body>
