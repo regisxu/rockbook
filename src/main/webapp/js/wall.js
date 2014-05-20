@@ -29,6 +29,33 @@ function show() {
             });
         }
 
+        var routes = d3.select(".routes");
+        if (data.routes) {
+            var table = routes.append("table")
+                .attr("class", "table table-hover table-responsive");
+            table.append("thead")
+                .append("tr")
+                .selectAll("th").data(["Name", "Level", "Length", "Bolts"])
+                .enter()
+                .append("th")
+                .text(function(d) { return d; });
+
+            var tbody = table.append("tbody");
+            var route = tbody.selectAll("tr").data(data.routes);
+            route.enter()
+                .append("tr")
+                .attr("class", "tr-route")
+                .attr("id", function(d) { return d.id; })
+                .attr("onclick", function(d) { return "clickRoute('" + d.id + "')"; })
+                .selectAll("td").data(function(d) { return [d.name, d.level, d.length, d.bolts]; })
+                .enter()
+                .append("td")
+                .text(function(d) { return d; });
+        } else {
+            routes.append("div")
+                .attr("class", "alert alert-warning")
+                .text("There is no routes info for this wall.");
+        }
     });
 }
 

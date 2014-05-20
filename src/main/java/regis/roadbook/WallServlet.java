@@ -71,6 +71,13 @@ public class WallServlet extends HttpServlet {
             BasicDBList images = db.query("image", imageQuery);
             dbObject.put("images", images);
         }
+
+        list = (BasicDBList) dbObject.get("routes");
+        if (list != null && !list.isEmpty()) {
+            BasicDBObject routeQuery = new BasicDBObject("_id", new BasicDBObject("$in", list));
+            BasicDBList routes = db.query("route", routeQuery);
+            dbObject.put("routes", routes);
+        }
         response.setContentType("application/json");
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().println(Utils.json(dbObject).toString());

@@ -16,7 +16,12 @@
   
   <!-- Custom styles for this template -->
   <link href="css/start.css" rel="stylesheet">
-  
+
+  <style type="text/css">
+    .tr-route:hover {
+        cursor: pointer;
+    }
+  </style>
 </head>
 <body>
 
@@ -66,12 +71,20 @@
       </div>
     </div>
 
+    <div class="routes">
+    </div>
+
   </div>
   
   <script src="js/d3.v3.min.js"></script>
   <script src="js/wall.js"></script>
   <script>
     show();
+
+    function clickRoute(rid) {
+        window.open("./route.html#" + rid);
+    }
+
   </script>
 
 </body>
