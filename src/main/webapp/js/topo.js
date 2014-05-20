@@ -30,14 +30,17 @@ function cursorPoint(x, y) {
     return pt.matrixTransform(document.querySelector("svg").getScreenCTM().inverse());
 }
 
-function buildTopo(topo) {
+function buildTopo(query, topo) {
     var pic = topo.pic;
     var routes = topo.routes;
 
-    var svg = d3.select('body')
+    var svg = d3.select(query)
         .append('svg')
         .attr('width', pic.width)
-        .attr('height', pic.height);
+        .attr('height', pic.height)
+        .append("g")
+        .attr("id", "canvas");
+
     svg.append("svg:defs").append("pattern")
         .attr("id", pic.id)
         .attr("patternUnits", "userSpaceOnUse")
@@ -78,6 +81,7 @@ function buildTopo(topo) {
 
     }
 
+    return svg;
 }
 
 

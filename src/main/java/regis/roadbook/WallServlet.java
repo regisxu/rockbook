@@ -78,6 +78,29 @@ public class WallServlet extends HttpServlet {
             BasicDBList routes = db.query("route", routeQuery);
             dbObject.put("routes", routes);
         }
+
+        list = (BasicDBList) dbObject.remove("topos");
+        if (list != null && !list.isEmpty()) {
+            BasicDBObject routeQuery = new BasicDBObject("_id", new BasicDBObject("$in", list));
+            BasicDBList routes = db.query("topo", routeQuery);
+            if (routes != null && !routes.isEmpty()) {
+                BasicDBObject route = (BasicDBObject) routes.get(0);
+                BasicDBObject pic = new BasicDBObject("id", Utils.id(route.getObjectId("pid")));
+                pic.append("height", route.getString("height"));
+                pic.append("width", route.getString("width"));
+                BasicDBObject topo = new BasicDBObject("pic", pic);
+                List<BasicDBObject> tmp = routes.stream().map(entry -> {
+                    BasicDBObject obj = new BasicDBObject();
+                    obj.append("id", ((BasicDBObject) entry).get("rid"));
+                    obj.append("bolts", ((BasicDBObject) entry).get("bolts"));
+                    return obj;
+                }).collect(Collectors.toList());
+                BasicDBList dbList = new BasicDBList();
+                dbList.addAll(tmp);
+                topo.append("routes", dbList);
+                dbObject.put("topo", topo);
+            }
+        }
         response.setContentType("application/json");
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().println(Utils.json(dbObject).toString());

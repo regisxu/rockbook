@@ -29,7 +29,16 @@ function show() {
             });
         }
 
-        var routes = d3.select(".routes");
+        if (data.topo) {
+            buildTopo(".topo", data.topo);
+            var topo = document.querySelector(".topo svg");
+            var height = topo.getAttribute("height");
+            var scale = 300 / height;
+            topo.setAttribute("height", height * scale);
+            topo.querySelector("#canvas").setAttribute("transform", "scale(" + scale + ")");
+        }
+
+        var routes = d3.select(".routes-list");
         if (data.routes) {
             var table = routes.append("table")
                 .attr("class", "table table-hover table-responsive");
