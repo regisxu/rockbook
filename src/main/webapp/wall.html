@@ -21,6 +21,10 @@
     .tr-route:hover {
         cursor: pointer;
     }
+
+    .nav-tabs a:hover {
+        cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -59,35 +63,43 @@
       </div>
     </div>
 
-    <div class="detail">
+    <ul class="nav nav-tabs">
+	  <li class="active"><a data-target=".routes" data-toggle="tab">Routes</a></li>
+	  <li><a data-target=".detail" data-toggle="tab">Info</a></li>
+	</ul>
 
-      <div class="row">
-        <div class="info col-md-8">
-          <div class="row">
-            <span class="col-md-4">Description: </span>
-            <span id="desc" class="col-md-8"></span>
+    <div class="tab-content">
+      <div class="detail tab-pane fade">
+        <div class="row">
+          <div class="info col-md-8">
+            <div class="row">
+              <span class="col-md-4">Description: </span>
+              <span id="desc" class="col-md-8"></span>
+            </div>
+          </div>
+          <div id="location" class="col-md-4">
+
           </div>
         </div>
-        <div id="location" class="col-md-4">
+
+        <div class="pics row">
 
         </div>
       </div>
 
-      <div class="pics row">
-        
-      </div>
-    </div>
-
-    <div class="routes">
-      <div class="topo">
-      </div>
-      <div class="routes-list">
+      <div class="routes tab-pane active fade in">
+        <div class="topo">
+        </div>
+        <div class="routes-list">
+        </div>
       </div>
     </div>
 
   </div>
   
   <script src="js/d3.v3.min.js"></script>
+  <script src="js/jquery-2.1.0.min.js"></script>
+  <script src="js/bootstrap.min.js"/></script>
   <script src="js/wall.js"></script>
   <script src="js/topo.js"></script>
   <script>
