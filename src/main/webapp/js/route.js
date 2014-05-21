@@ -35,6 +35,10 @@ function show() {
     });
 }
 
+function edit() {
+    window.location = "editRoute.html#" + id;
+}
+
 function parseId(url) {
     var index = url.lastIndexOf("#");
     if (index === -1) {
