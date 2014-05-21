@@ -1,6 +1,5 @@
-var data = {};
 
-function search(kw) {
+function search(kw, f) {
 
     var query = buildQuery(kw);
     console.log(query);
@@ -11,8 +10,7 @@ function search(kw) {
 	    if (error) {
             return console.warn(error);
         }
-        data = json;
-        show("list", data);
+        f(json);
     });
 }
 
