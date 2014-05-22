@@ -56,6 +56,8 @@ function show() {
                 .attr("class", "tr-route")
                 .attr("id", function(d) { return d.id; })
                 .attr("onclick", function(d) { return "clickRoute('" + d.id + "')"; })
+                .attr("onmouseover", function(d) { return "highlight('" + d.id + "')"; })
+                .attr("onmouseout", function(d) { return "unhighlight('" + d.id + "')"; })
                 .selectAll("td").data(function(d) { return [d.name, d.level, d.length, d.bolts]; })
                 .enter()
                 .append("td")

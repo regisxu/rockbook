@@ -1,13 +1,3 @@
-// Find your root SVG element
-//var svg = document.querySelector("svg");
-//var svg = buildTopo({id:"iG-9ey5sMSm-l5XT", width:"960", height:"1260"}, [{id:"tes1", "bolts":[{x:100, y:100}, {x:150, y:200}]}]);
-
-//document.getElementsByTagName("body")[0].appendChild(svg);
-
-// Create an SVGPoint for future math
-//var pt = svg.createSVGPoint();
-
-
 
 function click(event) {
     var rout = document.querySelector(".route");
@@ -65,7 +55,11 @@ function buildTopo(query, topo) {
 
         var route = svg.append("g")
             .attr("id", routes[i].id)
-            .attr("class", "route");
+            .attr("class", "route")
+            .attr("onclick", "open(evt)")
+            .attr("onmouseover", "highlight(evt.currentTarget.id)")
+            .attr("onmouseout", "unhighlight(evt.currentTarget.id)");
+
         
         route.selectAll("circle").data(routes[i].bolts).enter().append("svg:circle")
             .attr("cx", function(d) { return d.x; })
@@ -84,6 +78,13 @@ function buildTopo(query, topo) {
     return svg;
 }
 
+function highlight(route) {
+    d3.selectAll("#" + route + " path").attr("stroke", "yellow");
+}
+
+function unhighlight(route) {
+    d3.selectAll("#" + route + " path").attr("stroke", "red");
+}
 
 function calculatePath(bolts) {
     var path = "";
