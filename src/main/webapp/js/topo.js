@@ -86,6 +86,10 @@ function unhighlight(route) {
     d3.selectAll("#" + route + " path").attr("stroke", "red");
 }
 
+function removeTopo(route) {
+    d3.select("#" + route).remove();
+}
+
 function calculatePath(bolts) {
     var path = "";
     for (var i = 0; i < bolts.length; ++i) {
