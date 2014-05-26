@@ -3,18 +3,13 @@ package regis.roadbook;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.UnknownHostException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.bson.types.ObjectId;
 
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
@@ -37,34 +32,19 @@ public class WallServlet extends HttpServlet {
             response.setStatus(HttpServletResponse.SC_NO_CONTENT);
             return;
         }
-        if ("search".equals(path)) {
-            Map<String, String> para = new HashMap<>();
-            request.getParameterMap().forEach((key, value) -> para.put(key, convert(value)));
-            BasicDBList list = db.query("wall", new BasicDBObject(para));
-            Stream<ObjectId> stream = list.stream().map(entry -> ((BasicDBObject) entry).getObjectId("_id"));
-            List<ObjectId> ids = stream.collect(Collectors.toList());
-            BasicDBObject imageQuery = new BasicDBObject();
-            imageQuery.append("rid", new BasicDBObject("$in", ids));
-            BasicDBList images = db.query("image", imageQuery);
-            Map<ObjectId, List<Object>> group = images.stream().collect(
-                    Collectors.groupingBy(entry -> ((BasicDBObject) entry).getObjectId("rid")));
-            list.stream().forEach(entry -> {
-                ObjectId id = ((BasicDBObject) entry).getObjectId("_id");
-                if (group.containsKey(id)) {
-                    ((BasicDBObject) entry).put("image", Utils.id(((BasicDBObject) group.get(id).get(0)).getObjectId("_id")));
-                }
-            });
-            response.setContentType("application/json");
-            response.setStatus(HttpServletResponse.SC_OK);
-            BasicDBList array = new BasicDBList();
-            list.stream().forEach(o -> array.add(Utils.json((BasicDBObject) o)));
-            response.getWriter().println(array.toString());
-            return;
-        }
+
         BasicDBObject json = new BasicDBObject();
         json.put("id", path);
 
         BasicDBObject dbObject = (BasicDBObject) db.query("wall", Utils.dbo(json)).get(0);
+
+        enrich(dbObject);
+        response.setContentType("application/json");
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.getWriter().println(Utils.json(dbObject).toString());
+    }
+
+    private void enrich(BasicDBObject dbObject) {
         BasicDBList list = (BasicDBList) dbObject.get("images");
         if (list != null && list.size() > 0) {
             BasicDBObject imageQuery = new BasicDBObject("_id", new BasicDBObject("$in", list));
@@ -93,6 +73,7 @@ public class WallServlet extends HttpServlet {
                     BasicDBObject obj = new BasicDBObject();
                     obj.append("id", ((BasicDBObject) entry).get("rid"));
                     obj.append("bolts", ((BasicDBObject) entry).get("bolts"));
+                    obj.append("tid", ((BasicDBObject) entry).get("_id"));
                     return obj;
                 }).collect(Collectors.toList());
                 BasicDBList dbList = new BasicDBList();
@@ -101,17 +82,6 @@ public class WallServlet extends HttpServlet {
                 dbObject.put("topo", topo);
             }
         }
-        response.setContentType("application/json");
-        response.setStatus(HttpServletResponse.SC_OK);
-        response.getWriter().println(Utils.json(dbObject).toString());
-    }
-
-    private String convert(String[] sa) {
-        String result = "";
-        for (String s : sa) {
-            result += s;
-        }
-        return result;
     }
 
     @Override
@@ -147,9 +117,29 @@ public class WallServlet extends HttpServlet {
             return;
         }
 
-        BasicDBObject dbo = db.update("wall", Utils.dbo(json));
+        BasicDBObject simple = simplify(json);
+        BasicDBObject dbo = db.update("wall", Utils.dbo(simple));
         response.setContentType("application/json");
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().println(Utils.json(dbo));
+    }
+
+    private BasicDBObject simplify(BasicDBObject json) {
+        List<String> iids = ((BasicDBList) json.get("images")).stream().map(entry -> ((BasicDBObject) entry).getString("id")).collect(Collectors.toList());
+        BasicDBList ilist = new BasicDBList();
+        ilist.addAll(iids);
+        json.put("images", ilist);
+
+        List<String> rids = ((BasicDBList) json.get("routes")).stream().map(entry -> ((BasicDBObject) entry).getString("id")).collect(Collectors.toList());
+        BasicDBList rlist = new BasicDBList();
+        ilist.addAll(rids);
+        json.put("routes", rlist);
+
+        List<String> tids = ((BasicDBList)((BasicDBObject) json.remove("topo")).get("routes")).stream().map(entry -> ((BasicDBObject) entry).getString("tid")).collect(Collectors.toList());
+        BasicDBList tlist = new BasicDBList();
+        ilist.addAll(tids);
+        json.put("topos", tlist);
+
+        return json;
     }
 }
