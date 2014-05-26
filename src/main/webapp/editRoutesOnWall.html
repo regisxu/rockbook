@@ -60,7 +60,7 @@
 
       </div>
 
-      <button class="btn btn-default btn-primary" conclick="javascript:submit()">Submit</button>
+      <button class="btn btn-default btn-primary" onclick="javascript:submit()">Submit</button>
 
     </div><!-- /.container -->
 
@@ -75,26 +75,5 @@
 
     show();
 
-    function pressEnter(e, value) {
-      if(e.keyCode != 13) {
-        return;
-      }
-      search(value + " res:" + document.getElementById("sbtn").textContent.toLowerCase(), showData);
-    }
-
-    function selectRes(res) {
-        document.querySelector("#sbtn").innerHTML = res + " <span class=\"caret\"></span>";
-        if (document.getElementById("query").value) {
-            search("key:" + document.getElementById("query").value + " res:" + res.toLowerCase(), showData)
-        }
-    }
-
-    function submitSearch() {
-        search("key:" + document.getElementById("query").value + " res:" + document.getElementById("sbtn").textContent.toLowerCase(), showData)
-    }
-
-    function showData(data) {
-        show("list", data);
-    }
   </script>
 </html>
