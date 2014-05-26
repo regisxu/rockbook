@@ -30,12 +30,12 @@ function show() {
         }
 
         if (data.topo) {
-            buildTopo(".topo", data.topo);
-            var topo = document.querySelector(".topo svg");
-            var height = topo.getAttribute("height");
+            topo.build(data.topo);
+            var svg = document.querySelector(".topo svg");
+            var height = svg.getAttribute("height");
             var scale = 300 / height;
-            topo.setAttribute("height", height * scale);
-            topo.querySelector("#canvas").setAttribute("transform", "scale(" + scale + ")");
+            svg.setAttribute("height", height * scale);
+            svg.querySelector("#canvas").setAttribute("transform", "scale(" + scale + ")");
         }
 
         var routes = d3.select(".routes-list");
@@ -56,8 +56,8 @@ function show() {
                 .attr("class", "tr-route")
                 .attr("id", function(d) { return d.id; })
                 .attr("onclick", function(d) { return "clickRoute('" + d.id + "')"; })
-                .attr("onmouseover", function(d) { return "highlight('" + d.id + "')"; })
-                .attr("onmouseout", function(d) { return "unhighlight('" + d.id + "')"; })
+                .attr("onmouseover", function(d) { return "topo.highlight('" + d.id + "')"; })
+                .attr("onmouseout", function(d) { return "topo.unhighlight('" + d.id + "')"; })
                 .selectAll("td").data(function(d) { return [d.name, d.level, d.length, d.bolts]; })
                 .enter()
                 .append("td")
