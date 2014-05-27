@@ -29,33 +29,19 @@ function showRouteList() {
     var routes = d3.select(".routes-list");
 
     if (data.routes) {
-        routes.select(".no-route").remove();
+        routes.select(".no-route").style("display", "none");
 
         var route = d3.select(".routes-list tbody").selectAll("tr").data(data.routes, function(d) { return d.id; });
         route.enter()
-            .append("tr")
-            .attr("class", "tr-route")
+            .append(function() { return document.querySelector(".template .tr-route").cloneNode(true); })
             .attr("id", function(d) { return d.id; })
-            .attr("onmouseover", function(d) { return "topo.highlight('" + d.id + "')"; })
-            .attr("onmouseout", function(d) { return "topo.unhighlight('" + d.id + "')"; })
-            .selectAll("td").data(function(d) { return [d.name, d.level, d.length, d.bolts, "__button__"]; })
-            .enter()
-            .append("td")
-            .html(function(d) {
-                if (d == "__button__") {
-                    return "<span class='glyphicon glyphicon-pencil' onclick='javascript:draw(this.parentNode.parentNode.id)'></span> "
-                        + " <span class='glyphicon glyphicon-remove' onclick='javascript:removeRoute(this.parentNode.parentNode.id)'></span>";
-                } else {
-                    return d;
-                }
-            });
+            .selectAll(".td-route").data(function(d) { return [d.name, d.level, d.length, d.bolts, "__button__"]; })
+            .text(function(d) { return d; });
 
         route.exit().remove();
 
     } else {
-        routes.append("div")
-            .attr("class", "alert alert-warning no-route")
-            .text("There is no routes info for this wall.");
+        routes.select(".no-route").style("display", null);
     }
 }
 

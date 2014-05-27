@@ -79,6 +79,9 @@
           </tbody>
 
         </table>
+
+        <div class="alert alert-warning no-route" style="display:none">There is no routes info for this wall.</div>
+
       </div>
 
       <button class="btn btn-default btn-primary" onclick="javascript:submit()">Submit</button>
@@ -89,6 +92,20 @@
 
       <table>
         <tbody>
+          <tr class="tr-route" id="" onmouseover="topo.highlight(this.id)" onmouseout="topo.unhighlight(this.id)">
+            <td class="td-name td-route"></td>
+            <td class="td-level td-route"></td>
+            <td class="td-length td-route"></td>
+            <td class="td-bolts td-route"></td>
+
+            <td>
+              <span onclick="javascript:draw(this.parentNode.parentNode.id)" class="glyphicon glyphicon-pencil">
+              </span>
+              <span onclick="javascript:removeRoute(this.parentNode.parentNode.id)" class="glyphicon glyphicon-remove">
+              </span>
+            </td>
+          </tr>
+
           <tr class="tr-edit">
             <td class="td-edit">
               <input type="text" class="form-control name">
