@@ -21,6 +21,10 @@
       .dropdown-menu {
           min-width: 0px;
       }
+
+      .template {
+          display: none;
+      }
     </style>
 
   </head>
@@ -54,15 +58,60 @@
       </div>
 
       <div class="topo">
-        
+
       </div>
       <div class="routes-list">
+        <table class="table table-hover table-responsive">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Level</th>
+              <th>Length</th>
+              <th>Bolts</th>
+              <th>
+                <span onclick="javascript:add()" class="glyphicon glyphicon-plus">
+                </span>
+              </th>
+            </tr>
+          </thead>
 
+          <tbody>
+          </tbody>
+
+        </table>
       </div>
 
       <button class="btn btn-default btn-primary" onclick="javascript:submit()">Submit</button>
 
     </div><!-- /.container -->
+
+    <div class="template">
+
+      <table>
+        <tbody>
+          <tr class="tr-edit">
+            <td class="td-edit">
+              <input type="text" class="form-control name">
+            </td>
+            <td class="td-edit">
+              <input type="text" class="form-control level">
+            </td>
+            <td class="td-edit">
+              <input type="text" class="form-control length">
+            </td>
+            <td class="td-edit">
+              <input type="text" class="form-control bolts">
+            </td>
+            <td class="td-edit">
+              <span onclick="javascript:addRoute()" class="glyphicon glyphicon-ok">
+              </span>
+              <span onclick="javascript:removeRow(this.parentNode.parentNode.id)" class="glyphicon glyphicon-remove">
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
   </body>
   <script src="js/d3.v3.min.js"></script>
@@ -70,7 +119,7 @@
   <script src="js/bootstrap.min.js"/></script>
   <script src="js/topo.js"></script>
   <script src="js/editRoutesOnWall.js"></script>
-  
+
   <script>
 
     show();

@@ -21,49 +21,42 @@ function show() {
             svg.querySelector("#canvas").setAttribute("transform", "scale(" + scale + ")");
         }
 
-        var routes = d3.select(".routes-list");
-        if (data.routes) {
-            var table = routes.append("table")
-                .attr("class", "table table-hover table-responsive");
-            table.append("thead")
-                .append("tr")
-                .selectAll("th").data(["Name", "Level", "Length", "Bolts", ""])
-                .enter()
-                .append("th")
-                .html(function(d) {
-                    if (d == "") {
-                        return "<span class='glyphicon glyphicon-plus' onclick='javascript:add()'></span>";
-                    } else {
-                        return d;
-                    }
-                });
-
-            var tbody = table.append("tbody");
-            var route = tbody.selectAll("tr").data(data.routes);
-            route.enter()
-                .append("tr")
-                .attr("class", "tr-route")
-                .attr("id", function(d) { return d.id; })
-                .attr("onmouseover", function(d) { return "topo.highlight('" + d.id + "')"; })
-                .attr("onmouseout", function(d) { return "topo.unhighlight('" + d.id + "')"; })
-                .selectAll("td").data(function(d) { return [d.name, d.level, d.length, d.bolts, "__button__"]; })
-                .enter()
-                .append("td")
-                .html(function(d) {
-                    if (d == "__button__") {
-                        return "<span class='glyphicon glyphicon-pencil' onclick='javascript:draw(this.parentNode.parentNode.id)'></span> "
-                            + " <span class='glyphicon glyphicon-remove' onclick='javascript:removeRoute(this.parentNode.parentNode.id)'></span>";
-                    } else {
-                        return d;
-                    }
-                });
-
-        } else {
-            routes.append("div")
-                .attr("class", "alert alert-warning")
-                .text("There is no routes info for this wall.");
-        }
+        showRouteList();
     });
+}
+
+function showRouteList() {
+    var routes = d3.select(".routes-list");
+
+    if (data.routes) {
+        routes.select(".no-route").remove();
+
+        var route = d3.select(".routes-list tbody").selectAll("tr").data(data.routes, function(d) { return d.id; });
+        route.enter()
+            .append("tr")
+            .attr("class", "tr-route")
+            .attr("id", function(d) { return d.id; })
+            .attr("onmouseover", function(d) { return "topo.highlight('" + d.id + "')"; })
+            .attr("onmouseout", function(d) { return "topo.unhighlight('" + d.id + "')"; })
+            .selectAll("td").data(function(d) { return [d.name, d.level, d.length, d.bolts, "__button__"]; })
+            .enter()
+            .append("td")
+            .html(function(d) {
+                if (d == "__button__") {
+                    return "<span class='glyphicon glyphicon-pencil' onclick='javascript:draw(this.parentNode.parentNode.id)'></span> "
+                        + " <span class='glyphicon glyphicon-remove' onclick='javascript:removeRoute(this.parentNode.parentNode.id)'></span>";
+                } else {
+                    return d;
+                }
+            });
+
+        route.exit().remove();
+
+    } else {
+        routes.append("div")
+            .attr("class", "alert alert-warning no-route")
+            .text("There is no routes info for this wall.");
+    }
 }
 
 function submit() {
@@ -90,21 +83,22 @@ function draw(route) {
 }
 
 function removeRoute(route) {
-    var routes = data.routes;
-    for (var i = 0; i < routes.length; ++i) {
-        if (routes[i].id == route) {
-            routes.splice(i, 1);
+    for (var i = 0; i < data.routes.length; ++i) {
+        if (data.routes[i].id == route) {
+            data.routes.splice(i, 1);
             break;
         }
     }
-    d3.selectAll(".routes-list tbody tr").data(data.routes, function(d) { return d.id; }).exit().remove();
+    showRouteList();
 
-    var routes = data.topo.routes;
-    for (var i = 0; i < routes.length; ++i) {
-        if (routes[i].id == route) {
-            routes.splice(i, 1);
-            topo.remove(route);
-            break;
+    if (data.topo) {
+        var routes = data.topo.routes;
+        for (var i = 0; i < routes.length; ++i) {
+            if (routes[i].id == route) {
+                routes.splice(i, 1);
+                topo.remove(route);
+                break;
+            }
         }
     }
 }
@@ -114,21 +108,10 @@ function edit() {
 }
 
 function add() {
-    d3.select(".routes-list tbody").append("tr")
-        .attr("class", "edit-row")
-        .selectAll("td").data(["name", "level", "length", "bolts", "__button__"])
-        .enter()
-        .append("td")
-        .attr("class", "edit-column")
-        .html(function(d) {
-            if (d == "__button__") {
-                return "<span class='glyphicon glyphicon-ok' onclick='javascript:addRoute()'></span> "
-                    + " <span class='glyphicon glyphicon-remove' onclick='javascript:removeRow(this.parentNode.parentNode.id)'></span>";
-
-            } else {
-                return "<input type=\"text\" class=\"form-control " + d + "\">";
-            }
-        });
+    if (!document.querySelector(".routes-list .tr-edit")) {
+        var row = document.querySelector(".template .tr-edit").cloneNode(true);
+        document.querySelector(".routes-list tbody").appendChild(row);
+    }    
 }
 
 function addRoute() {
@@ -136,10 +119,10 @@ function addRoute() {
     request.open("POST", "/api/route", true);
     request.setRequestHeader("Content-Type", "application/json");
     var route = {};
-    route.name = document.querySelector(".edit-column .name").value;
-    route.level = document.querySelector(".edit-column .level").value;
-    route.length = document.querySelector(".edit-column .length").value;
-    route.bolts = document.querySelector(".edit-column .bolts").value;
+    route.name = document.querySelector(".td-edit .name").value;
+    route.level = document.querySelector(".td-edit .level").value;
+    route.length = document.querySelector(".td-edit .length").value;
+    route.bolts = document.querySelector(".td-edit .bolts").value;
 
 
     request.onload = function(event) {
@@ -147,26 +130,11 @@ function addRoute() {
             console.log("Success!");
             removeRow();
             var newRoute = JSON.parse(request.responseText);
+            if (!data.routes) {
+                data.routes = [];
+            }
             data.routes.push(newRoute);
-            d3.select(".routes-list tbody").selectAll("tr").data(data.routes)
-                .enter()
-                .append("tr")
-                .attr("class", "tr-route")
-                .attr("id", function(d) { return d.id; })
-                .attr("onmouseover", function(d) { return "topo.highlight('" + d.id + "')"; })
-                .attr("onmouseout", function(d) { return "topo.unhighlight('" + d.id + "')"; })
-                .selectAll("td").data(function(d) { return [d.name, d.level, d.length, d.bolts, "__button__"]; })
-                .enter()
-                .append("td")
-                .html(function(d) {
-                    if (d == "__button__") {
-                        return "<span class='glyphicon glyphicon-pencil' onclick='javascript:draw(this.parentNode.parentNode.id)'></span> "
-                            + " <span class='glyphicon glyphicon-remove' onclick='javascript:removeRoute(this.parentNode.parentNode.id)'></span>";
-                    } else {
-                        return d;
-                    }
-                });
-
+            showRouteList();
         } else {
             console.log("error code: ", request.status);
         }
@@ -177,7 +145,7 @@ function addRoute() {
 }
 
 function removeRow() {
-    d3.select(".edit-row").remove();
+    d3.select(".tr-edit").remove();
 }
 
 function parseId(url) {
