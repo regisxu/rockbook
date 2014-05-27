@@ -1,5 +1,6 @@
 var id = parseId(location.href);
 var data = {};
+var topo = null;
 
 function show() {
     d3.json("/api/wall/" + id, function(error, json) {
@@ -30,8 +31,8 @@ function show() {
         }
 
         if (data.topo) {
-            topo.build(data.topo);
-            var svg = document.querySelector(".topo svg");
+            topo = new Topo(data.topo);
+            var svg = topo.svg;
             var height = svg.getAttribute("height");
             var scale = 300 / height;
             svg.setAttribute("height", height * scale);
