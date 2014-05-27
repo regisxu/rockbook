@@ -125,21 +125,29 @@ public class WallServlet extends HttpServlet {
     }
 
     private BasicDBObject simplify(BasicDBObject json) {
-        List<String> iids = ((BasicDBList) json.get("images")).stream().map(entry -> ((BasicDBObject) entry).getString("id")).collect(Collectors.toList());
-        BasicDBList ilist = new BasicDBList();
-        ilist.addAll(iids);
-        json.put("images", ilist);
+        if (json.get("images") != null) {
+            List<String> iids = ((BasicDBList) json.get("images")).stream()
+                    .map(entry -> ((BasicDBObject) entry).getString("id")).collect(Collectors.toList());
+            BasicDBList ilist = new BasicDBList();
+            ilist.addAll(iids);
+            json.put("images", ilist);
+        }
 
-        List<String> rids = ((BasicDBList) json.get("routes")).stream().map(entry -> ((BasicDBObject) entry).getString("id")).collect(Collectors.toList());
-        BasicDBList rlist = new BasicDBList();
-        ilist.addAll(rids);
-        json.put("routes", rlist);
+        if (json.get("routes") != null) {
+            List<String> rids = ((BasicDBList) json.get("routes")).stream()
+                    .map(entry -> ((BasicDBObject) entry).getString("id")).collect(Collectors.toList());
+            BasicDBList rlist = new BasicDBList();
+            rlist.addAll(rids);
+            json.put("routes", rlist);
+        }
 
-        List<String> tids = ((BasicDBList)((BasicDBObject) json.remove("topo")).get("routes")).stream().map(entry -> ((BasicDBObject) entry).getString("tid")).collect(Collectors.toList());
-        BasicDBList tlist = new BasicDBList();
-        ilist.addAll(tids);
-        json.put("topos", tlist);
-
+        if (json.get("topos") != null) {
+            List<String> tids = ((BasicDBList) ((BasicDBObject) json.remove("topo")).get("routes")).stream()
+                    .map(entry -> ((BasicDBObject) entry).getString("tid")).collect(Collectors.toList());
+            BasicDBList tlist = new BasicDBList();
+            tlist.addAll(tids);
+            json.put("topos", tlist);
+        }
         return json;
     }
 }

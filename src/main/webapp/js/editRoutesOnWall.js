@@ -113,6 +113,73 @@ function edit() {
     window.location = "editWall.html#" + id;
 }
 
+function add() {
+    d3.select(".routes-list tbody").append("tr")
+        .attr("class", "edit-row")
+        .selectAll("td").data(["name", "level", "length", "bolts", "__button__"])
+        .enter()
+        .append("td")
+        .attr("class", "edit-column")
+        .html(function(d) {
+            if (d == "__button__") {
+                return "<span class='glyphicon glyphicon-ok' onclick='javascript:addRoute()'></span> "
+                    + " <span class='glyphicon glyphicon-remove' onclick='javascript:removeRow(this.parentNode.parentNode.id)'></span>";
+
+            } else {
+                return "<input type=\"text\" class=\"form-control " + d + "\">";
+            }
+        });
+}
+
+function addRoute() {
+    var request = new XMLHttpRequest();
+    request.open("POST", "/api/route", true);
+    request.setRequestHeader("Content-Type", "application/json");
+    var route = {};
+    route.name = document.querySelector(".edit-column .name").value;
+    route.level = document.querySelector(".edit-column .level").value;
+    route.length = document.querySelector(".edit-column .length").value;
+    route.bolts = document.querySelector(".edit-column .bolts").value;
+
+
+    request.onload = function(event) {
+        if (request.status == 200) {
+            console.log("Success!");
+            removeRow();
+            var newRoute = JSON.parse(request.responseText);
+            data.routes.push(newRoute);
+            d3.select(".routes-list tbody").selectAll("tr").data(data.routes)
+                .enter()
+                .append("tr")
+                .attr("class", "tr-route")
+                .attr("id", function(d) { return d.id; })
+                .attr("onmouseover", function(d) { return "topo.highlight('" + d.id + "')"; })
+                .attr("onmouseout", function(d) { return "topo.unhighlight('" + d.id + "')"; })
+                .selectAll("td").data(function(d) { return [d.name, d.level, d.length, d.bolts, "__button__"]; })
+                .enter()
+                .append("td")
+                .html(function(d) {
+                    if (d == "__button__") {
+                        return "<span class='glyphicon glyphicon-pencil' onclick='javascript:draw(this.parentNode.parentNode.id)'></span> "
+                            + " <span class='glyphicon glyphicon-remove' onclick='javascript:removeRoute(this.parentNode.parentNode.id)'></span>";
+                    } else {
+                        return d;
+                    }
+                });
+
+        } else {
+            console.log("error code: ", request.status);
+        }
+    };
+
+    request.send(JSON.stringify(route));
+
+}
+
+function removeRow() {
+    d3.select(".edit-row").remove();
+}
+
 function parseId(url) {
     var index = url.lastIndexOf("#");
     if (index === -1) {
