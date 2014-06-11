@@ -66,7 +66,42 @@ function submit() {
 }
 
 function draw(route) {
-    console.log(route);
+    d3.select("#" + route + " .glyphicon-pencil").style("display", "none");
+    d3.select("#" + route + " .glyphicon-ok").style("display", null);
+    topo.edit(route);
+}
+
+function done(route) {
+    d3.select("#" + route + " .glyphicon-ok").style("display", "none");
+    d3.select("#" + route + " .glyphicon-pencil").style("display", null);
+    topo.finish();
+
+    var t = {};
+    t.pid = data.topo.pic.id;
+    t.height = data.topo.pic.height;
+    t.width = data.topo.pic.width;
+    t.rid = route;
+    for (var i = 0; i < data.topo.routes.length; ++i) {
+        if (data.topo.routes[i].id == route) {
+            t.id = data.topo.routes[i].tid;
+            t.bolts = data.topo.routes[i].bolts;
+        }
+    }
+
+    var form = document.getElementById("wall");
+
+    var request = new XMLHttpRequest();
+    request.open("PUT", "/api/topo/" + t.id, true);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.onload = function(event) {
+        if (request.status == 200) {
+            console.log("Success!");
+        } else {
+            console.log("error code: ", request.status);
+        }
+    };
+
+    request.send(JSON.stringify(t));
 }
 
 function removeRoute(route) {

@@ -83,6 +83,27 @@ public class TopoServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (!request.getContentType().toLowerCase().contains("application/json")) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return;
+        }
+        BufferedReader reader = request.getReader();
+        BasicDBObject json = (BasicDBObject) JSON.parse(Utils.readString(reader));
+        if (json.get("id") == null) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return;
+        }
+        BasicDBList list = db.query("topo", new BasicDBObject("_id", Utils.oid((String) json.get("id"))));
+        if (list == null || list.size() != 1) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
+
+        BasicDBObject value = Utils.dbo(json);
+        BasicDBObject dbo = db.update("topo", value);
+        response.setContentType("application/json");
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.getWriter().println(Utils.json(dbo));
 
     }
 
