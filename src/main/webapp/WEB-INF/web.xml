@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app PUBLIC
+        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+    <display-name>Rock Book Application</display-name>
+
+    <servlet>
+        <servlet-name>WallServlet</servlet-name>
+        <display-name>WallServlet</display-name>
+        <servlet-class>regis.roadbook.WallServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet>
+        <servlet-name>RouteServlet</servlet-name>
+        <display-name>RouteServlet</display-name>
+        <servlet-class>regis.roadbook.RouteServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet>
+        <servlet-name>SearchServlet</servlet-name>
+        <display-name>SearchServlet</display-name>
+        <servlet-class>regis.roadbook.SearchServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet>
+        <servlet-name>TopoServlet</servlet-name>
+        <display-name>TopoServlet</display-name>
+        <servlet-class>regis.roadbook.TopoServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet>
+        <servlet-name>ImageService</servlet-name>
+        <display-name>ImageService</display-name>
+        <servlet-class>regis.roadbook.ImageService</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>WallServlet</servlet-name>
+        <url-pattern>/api/wall/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>RouteServlet</servlet-name>
+        <url-pattern>/api/route/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>SearchServlet</servlet-name>
+        <url-pattern>/api/search/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>TopoServlet</servlet-name>
+        <url-pattern>/api/topo/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ImageService</servlet-name>
+        <url-pattern>/api/image/*</url-pattern>
+    </servlet-mapping>
+</web-app>
