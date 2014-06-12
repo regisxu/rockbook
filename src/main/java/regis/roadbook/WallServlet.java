@@ -127,7 +127,13 @@ public class WallServlet extends HttpServlet {
     private BasicDBObject simplify(BasicDBObject json) {
         if (json.get("images") != null) {
             List<String> iids = ((BasicDBList) json.get("images")).stream()
-                    .map(entry -> ((BasicDBObject) entry).getString("id")).collect(Collectors.toList());
+                    .map(entry -> {
+                        if (entry instanceof BasicDBObject) {
+                            return ((BasicDBObject) entry).getString("id");
+                        } else {
+                            return (String) entry;
+                        }
+                        }).collect(Collectors.toList());
             BasicDBList ilist = new BasicDBList();
             ilist.addAll(iids);
             json.put("images", ilist);

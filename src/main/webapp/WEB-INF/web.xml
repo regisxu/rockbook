@@ -38,6 +38,12 @@
         <display-name>ImageService</display-name>
         <servlet-class>regis.roadbook.ImageService</servlet-class>
         <load-on-startup>1</load-on-startup>
+        <multipart-config>
+            <location>images</location>
+            <max-file-size>8388608</max-file-size>
+            <max-request-size>10485760</max-request-size>
+            <file-size-threshold>8388608</file-size-threshold>
+        </multipart-config>
     </servlet>
 
     <servlet-mapping>
