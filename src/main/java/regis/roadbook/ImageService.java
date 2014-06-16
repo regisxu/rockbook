@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.UnknownHostException;
+import java.util.Optional;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,8 +19,8 @@ import javax.servlet.http.Part;
 
 import org.bson.types.ObjectId;
 
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
-import com.mongodb.util.JSON;
 
 public class ImageService extends HttpServlet {
 
@@ -47,7 +48,12 @@ public class ImageService extends HttpServlet {
         BasicDBObject json = new BasicDBObject();
         json.put("id", path);
 
-        BasicDBObject dbObject = (BasicDBObject) db.query("image", Utils.dbo(json)).get(0);
+        BasicDBList result = db.query("image", Utils.dbo(json));
+        if (result.isEmpty()) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
+        BasicDBObject dbObject = (BasicDBObject) result.get(0);
         String name = (String) dbObject.get("name");
         int index = name.lastIndexOf(".");
         String type = "jpg";
@@ -74,52 +80,34 @@ public class ImageService extends HttpServlet {
             return;
         }
 
+        Optional<Part> op = request.getParts().stream().filter(entry -> "file".equals(entry.getName())).findFirst();
+        if (!op.isPresent()) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return;
+        }
+
         BasicDBObject image = new BasicDBObject();
         image.put("_id", new ObjectId());
-        request.getParts().stream().forEach(p -> {
-            switch (p.getName()) {
-            case "file":
-                try {
-                    for (String field : p.getHeader("content-disposition").split(";")) {
-                        String[] kv = field.split("=");
-                        if (kv.length == 2 && "filename".equalsIgnoreCase(kv[0].trim())) {
-                            if (kv[1].length() >= 2) {
-                                image.put("name", kv[1].substring(1, kv[1].length() - 1));
-                            }
-                        }
+        for (String field : op.get().getHeader("content-disposition").split(";")) {
+            String[] kv = field.split("=");
+            if (kv.length == 2 && "filename".equalsIgnoreCase(kv[0].trim())) {
+                if (kv[1].length() >= 2) {
+                    image.put("name", kv[1].substring(1, kv[1].length() - 1));
+                }
+            }
 
-                    }
-                    String name = image.getString("name");
-                    String suffix = name.substring(name.lastIndexOf(".") + 1);
-                    String path = repo + "/" + buildFileName(image.getObjectId("_id").toString(), suffix);
-                    saveImage(new File(base, path), p.getInputStream());
-                    image.put("path", path);
-                } catch (Exception e) {
-                    // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-                break;
-            case "ref":
-                BasicDBObject ref = parseRef(p);
-                image.put("col", ref.get("col"));
-                image.put("rid", Utils.oid((String) ref.get("rid")));
-                break;
-            }
-        });
+        }
+
+        String name = image.getString("name");
+        String suffix = name.substring(name.lastIndexOf(".") + 1);
+        String path = repo + "/" + buildFileName(image.getObjectId("_id").toString(), suffix);
+        saveImage(new File(base, path), op.get().getInputStream());
+        image.put("path", path);
 
         BasicDBObject dbo = db.insert("image", image);
         response.setContentType("application/json");
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().println(Utils.json(dbo));
-    }
-
-    private BasicDBObject parseRef(Part p) {
-        try (InputStream in = p.getInputStream()) {
-            return (BasicDBObject) JSON.parse(Utils.readString(in));
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
     private void saveImage(File file, InputStream in) throws IOException {
