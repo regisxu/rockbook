@@ -2,12 +2,11 @@ package regis.roadbook;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.UnknownHostException;
 
@@ -26,8 +25,14 @@ public class ImageService extends HttpServlet {
 
     private DBService db;
 
+    private String repo;
+
+    private File base;
+
     public ImageService() throws UnknownHostException {
         db = DBService.getInstance();
+        base = new File(System.getProperty("app.base.dir"));
+        repo = AppProperties.get("image.repo");
     }
 
     @Override
@@ -52,7 +57,7 @@ public class ImageService extends HttpServlet {
         response.setContentType("image/" + type);
         response.setStatus(HttpServletResponse.SC_OK);
         OutputStream out = response.getOutputStream();
-        try (BufferedInputStream in = new BufferedInputStream(new FileInputStream((String) dbObject.get("path")))) {
+        try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(new File(base, (String) dbObject.get("path"))))) {
             byte[] bs = new byte[1024 * 4];
             int count = 0;
             while ((count = in.read(bs)) != -1) {
@@ -86,8 +91,8 @@ public class ImageService extends HttpServlet {
                     }
                     String name = image.getString("name");
                     String suffix = name.substring(name.lastIndexOf(".") + 1);
-                    String path = "images/" + buildFileName(image.getObjectId("_id").toString(), suffix);
-                    saveImage(path, p.getInputStream());
+                    String path = repo + "/" + buildFileName(image.getObjectId("_id").toString(), suffix);
+                    saveImage(new File(base, path), p.getInputStream());
                     image.put("path", path);
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
@@ -117,7 +122,7 @@ public class ImageService extends HttpServlet {
         }
     }
 
-    private void saveImage(String file, InputStream in) throws IOException {
+    private void saveImage(File file, InputStream in) throws IOException {
         byte[] bs = new byte[1024 * 4];
         try (OutputStream out = new BufferedOutputStream(new FileOutputStream(file))) {
             int count = 0;
@@ -130,35 +135,5 @@ public class ImageService extends HttpServlet {
 
     private String buildFileName(String id, String suffix) {
         return id + "." + suffix;
-    }
-
-    private String saveImage(Part part, ObjectId oid) throws IOException {
-        byte[] bs = new byte[1024 * 4];
-        try (InputStream in = part.getInputStream();) {
-            String path = "images/" + oid.toString();
-            try (OutputStream out = new BufferedOutputStream(new FileOutputStream(path))) {
-                int count = 0;
-                while ((count = in.read(bs)) != -1) {
-                    out.write(bs, 0, count);
-                }
-                out.flush();
-                return path;
-            }
-        }
-    }
-
-    private String readContent(InputStream in) {
-        StringBuilder builder = new StringBuilder();
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-            String line = null;
-            while ((line = reader.readLine()) != null) {
-                builder.append(line).append("\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return builder.toString();
     }
 }

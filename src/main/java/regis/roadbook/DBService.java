@@ -23,7 +23,8 @@ public class DBService {
     }
 
     private DBService() throws UnknownHostException {
-        MongoClient client = new MongoClient("localhost", 27017);
+        MongoClient client = new MongoClient(AppProperties.get("db.host"), Integer.parseInt(AppProperties
+                .get("db.port")));
         db = client.getDB("roadbook");
         history = new HistoryService(db);
     }
