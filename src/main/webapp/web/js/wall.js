@@ -26,7 +26,7 @@ function show() {
             .append("div")
             .attr("class", "pic col-md-4")
             .html(function(d) {
-                return "<img src=\"../api/image/" + d.id + "\"  height=\"200\" >"
+                return "<img src=\"../api/image/" + d.id + "?size=0x400" + "\"  height=\"200\" >"
             });
         }
 

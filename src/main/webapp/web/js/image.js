@@ -10,8 +10,7 @@ function showImages(ids) {
         .attr("class", "pic col-md-3 img-wrap")
         .attr("id", function(d) { return d; });
     div.append("img")
-        .attr("src", function(d) { return "../api/image/" + d; })
-        .attr("width", "200")
+        .attr("src", function(d) { return "../api/image/" + d + "?size=0x300"; })
         .attr("height", "200");
 
     div.append("div")

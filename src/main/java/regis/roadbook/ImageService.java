@@ -1,5 +1,7 @@
 package regis.roadbook;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -10,7 +12,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.UnknownHostException;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +33,8 @@ public class ImageService extends HttpServlet {
     private String repo;
 
     private File base;
+
+    private static final Pattern SIZE_PATTERN = Pattern.compile("[1-9]\\d*[xX][1-9]\\d*|0");
 
     public ImageService() throws UnknownHostException {
         db = DBService.getInstance();
@@ -60,16 +66,43 @@ public class ImageService extends HttpServlet {
         if (index != -1) {
             type = name.substring(index + 1);
         }
+
         response.setContentType("image/" + type);
         response.setStatus(HttpServletResponse.SC_OK);
         OutputStream out = response.getOutputStream();
-        try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(new File(base, (String) dbObject.get("path"))))) {
-            byte[] bs = new byte[1024 * 4];
-            int count = 0;
-            while ((count = in.read(bs)) != -1) {
-                out.write(bs, 0, count);
+
+        if (isResize(request.getParameter("size"))) {
+            String[] p = request.getParameter("size").trim().split("[xX]");
+            int width = Integer.parseInt(p[0]);
+            int height = Integer.parseInt(p[1]);
+            BufferedImage img = ImageIO.read(new File(base, dbObject.getString("path")));
+            if (width == 0 && height == 0) {
+                width = img.getWidth();
+                height = img.getHeight();
+            } else if (width == 0) {
+                width = img.getWidth() * height / img.getHeight();
+            } else if (height == 0) {
+                height = img.getHeight() * width / img.getWidth();
+            }
+            BufferedImage rimg = new BufferedImage(width, height, img.getType());
+            Graphics2D g = rimg.createGraphics();
+            g.drawImage(img, 0, 0, width, height, null);
+            g.dispose();
+            ImageIO.write((BufferedImage) rimg, type, out);
+        } else {
+            try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(new File(base,
+                    dbObject.getString("path"))))) {
+                byte[] bs = new byte[1024 * 4];
+                int count = 0;
+                while ((count = in.read(bs)) != -1) {
+                    out.write(bs, 0, count);
+                }
             }
         }
+    }
+
+    private boolean isResize(String size) {
+        return size != null && SIZE_PATTERN.matcher(size.trim()).find();
     }
 
     @Override
