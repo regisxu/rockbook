@@ -25,9 +25,12 @@ function show() {
         pic.enter()
             .append("div")
             .attr("class", "pic col-md-4")
-            .html(function(d) {
-                return "<img src=\"../api/image/" + d.id + "?size=0x400" + "\"  height=\"200\" >"
-            });
+            .append("a")
+            .attr("href", function(d) { return "../api/image/" + d.id; })
+            .attr("target", "_blank")
+            .append("img")
+            .attr("src", function(d) { return "../api/image/" + d.id + "?size=0x400"; })
+            .attr("height", 200);
         }
 
         if (data.topo) {
