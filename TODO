@@ -1,6 +1,15 @@
+-*- mode: outline -*-
+
+* Make the whole flow work.
+add/edit wall/route/topo.
+
 * User management
 * Level management
-* Click image thumbnail show full image
+* Refactor image script
+* better image navigation
+** Use blueimp for image gallery
+https://github.com/blueimp/Bootstrap-Image-Gallery
+** Click image thumbnail show full image
 * Add more route info items
 type: sports, trad, top
 * Support Multi-pitchs
@@ -8,7 +17,6 @@ type: sports, trad, top
 * Add paging
 * Support keywords search
 * make map thumbnail clickable
-* better image navigation
 * re-design detail section
 * Add loading page
 * view/edit route topo
