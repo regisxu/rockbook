@@ -147,7 +147,7 @@
       if(e.keyCode != 13) {
         return;
       }
-      search(value + " res:" + document.getElementById("sbtn").textContent.toLowerCase(), showData);
+      search("key:" + document.getElementById("query").value + " res:" + document.getElementById("sbtn").textContent.toLowerCase(), showData);
     }
 
     function selectRes(res) {
