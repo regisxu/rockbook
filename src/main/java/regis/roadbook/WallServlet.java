@@ -124,6 +124,26 @@ public class WallServlet extends HttpServlet {
         response.getWriter().println(Utils.json(dbo));
     }
 
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+            IOException {
+        String path = request.getPathInfo();
+        if (path.startsWith("/")) {
+            path = path.substring(1);
+        } else {
+            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            return;
+        }
+        BasicDBObject json = new BasicDBObject();
+        json.put("id", path);
+
+        if (db.delete("wall", Utils.dbo(json)) == null) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        } else {
+            response.setStatus(HttpServletResponse.SC_OK);
+        }
+    }
+
     private BasicDBObject simplify(BasicDBObject json) {
         if (json.get("images") != null) {
             List<String> iids = ((BasicDBList) json.get("images")).stream()

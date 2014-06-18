@@ -88,4 +88,24 @@ public class RouteServlet extends HttpServlet {
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().println(Utils.json(dbo));
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+            IOException {
+        String path = request.getPathInfo();
+        if (path.startsWith("/")) {
+            path = path.substring(1);
+        } else {
+            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            return;
+        }
+        BasicDBObject json = new BasicDBObject();
+        json.put("id", path);
+
+        if (db.delete("route", Utils.dbo(json)) == null) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        } else {
+            response.setStatus(HttpServletResponse.SC_OK);
+        }
+    }
 }

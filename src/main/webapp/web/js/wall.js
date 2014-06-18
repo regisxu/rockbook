@@ -78,6 +78,20 @@ function edit() {
     window.location = "editWall.html#" + id;
 }
 
+function deleteWall() {
+    var request = new XMLHttpRequest();
+    request.open("DELETE", "/api/wall/" + id, true);
+    request.onload = function(event) {
+        if (request.status == 200) {
+            console.log("Success!");
+            window.location.href = "/web/start.html";
+        } else {
+            console.log("error code: ", request.status);
+        }
+    };
+    request.send();
+}
+
 function parseId(url) {
     var index = url.lastIndexOf("#");
     if (index === -1) {
