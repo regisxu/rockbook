@@ -51,20 +51,34 @@
     <div class="container">
 
       <div class="starter-template">
-        <div class="input-group">
-          <div class="input-group-btn">
-            <button type="button" id="sbtn" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Route <span class="caret"></span></button>
-            <ul class="dropdown-menu dropdown-menu-left" role="menu">
-              <li><a href="javascript:selectRes('Route')">Route</a></li>
-              <li><a href="javascript:selectRes('Wall')">Wall</a></li>
+        <div class="row">
+          <div class="col-md-8">
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button type="button" id="sbtn" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Route <span class="caret"></span></button>
+                <ul class="dropdown-menu dropdown-menu-left" role="menu">
+                  <li><a href="javascript:selectRes('Route')">Route</a></li>
+                  <li><a href="javascript:selectRes('Wall')">Wall</a></li>
+                </ul>
+              </div><!-- /btn-group -->
+
+              <input id="query" type="text" class="form-control" placeholder="Search" onkeypress="pressEnter(event, this.value)">
+
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button" onclick="javascript:submitSearch()"><span class="glyphicon glyphicon-search"></span></button>
+              </span>
+            </div>
+          </div>
+
+          <div class="col-md-2">
+            <button type="button" class="btn btn-default dropdown-toggle btn-block" data-toggle="dropdown">
+              <span class="glyphicon glyphicon-plus"></span> Add
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="addWall.html">Wall</a></li>
+              <li><a href="addRoute.html">Route</a></li>
             </ul>
-          </div><!-- /btn-group -->
-
-          <input id="query" type="text" class="form-control" placeholder="Search" onkeypress="pressEnter(event, this.value)">
-
-          <span class="input-group-btn">
-            <button class="btn btn-default" type="button" onclick="javascript:submitSearch()"><span class="glyphicon glyphicon-search"></span></button>
-          </span>
+          </div>
         </div>
       </div>
 

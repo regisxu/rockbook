@@ -39,9 +39,8 @@ function upload(form) {
             div.setAttribute("class", "pic col-md-3 img-wrap");
             div.setAttribute("id", data.id);
             var img = document.createElement("img");
-            img.setAttribute("src", "../api/image/" + data.id);
+            img.setAttribute("src", "../api/image/" + data.id + "?size=0x300");
             img.setAttribute("height", "200");
-            img.setAttribute("width", "200");
             div.appendChild(img);
             var overlay = document.createElement("div");
             overlay.setAttribute("class", "img-overlay");
