@@ -8,6 +8,24 @@ function showMap(id, x, y) {
             x = coords.longitude;
             y = coords.latitude;
             show(id, x, y);
+        }, function(error) {
+            switch(error.code) {
+            case error.TIMEOUT:
+                console.error("A timeout occured! Please try again!");
+                break;
+            case error.POSITION_UNAVAILABLE:
+                console.error('We can\'t detect your location. Sorry!');
+                break;
+            case error.PERMISSION_DENIED:
+                console.error('Please allow geolocation access for this to work.');
+                break;
+            case error.UNKNOWN_ERROR:
+                console.error('An unknown error occured!');
+                break;
+            }
+            x = 116.4035;
+            y = 39.915;
+            show(id, x, y);
         });
     } else {
         show(id, x, y);
@@ -50,23 +68,8 @@ function search(value) {
     });
 }
 
-function currentPosition(callback) {
-    var locationError = function(error){
-        switch(error.code) {
-        case error.TIMEOUT:
-            showError("A timeout occured! Please try again!");
-            break;
-        case error.POSITION_UNAVAILABLE:
-            showError('We can\'t detect your location. Sorry!');
-            break;
-        case error.PERMISSION_DENIED:
-            showError('Please allow geolocation access for this to work.');
-            break;
-        case error.UNKNOWN_ERROR:
-            showError('An unknown error occured!');
-            break;
-        }
-    }
+function currentPosition(callback, error) {
+    var locationError = error;
 
     var locationSuccess = callback;
 
