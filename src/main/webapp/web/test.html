@@ -4,6 +4,7 @@
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Hello, World</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
 <style type="text/css">
 html{height:100%}
 body{height:100%;margin:0px;padding:0px}
@@ -59,7 +60,7 @@ input.file {
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.5&ak=gKuzyexnoAke3QEEf0qOuVj6"></script>
 
 </head>
- 
+
 <body>
 
 <!-- <div class="fileinputs"> -->
@@ -90,12 +91,41 @@ input.file {
       <img data-src="holder.js/200x200/empty" class="btn-file" onclick="document.getElementById('file').click()">
       <input type="file" name="file" id="file" onchange="addPhoto(this)" style="display:none"/>
     </div>
-    
+
   </div>
 
   <img data-src="holder.js/200x200/size: 80">
 
+
+<br>
+
+<table class="table table-responsive table-bordered">
+  <thead>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="active" width="10%">Level</td>
+      <td>5.10</td>
+      <td class="active" width="10%">Length</td>
+      <td>25</td>
+    </tr>
+    <tr>
+      <td class="active" width="10%">Bolts</td>
+      <td>10</td>
+      <td class="active" width="10%"></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="active" width="10%">Description</td>
+      <td colspan="3">test</td>
+    </tr>
+  </tbody>
+</table>
 </div>
+
+<script src="js/d3.v3.min.js"></script>
+<script src="js/jquery-2.1.0.min.js"></script>
+<script src="js/bootstrap.min.js"/></script>
 
 <script src="js/holder.js"></script>
 <script type="text/javascript">

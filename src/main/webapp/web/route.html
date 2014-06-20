@@ -8,15 +8,15 @@
   <meta name="author" content="Regis Xu">
   <!-- add site ico here -->
   <!--link rel="shortcut icon" href="../../assets/ico/favicon.ico"-->
-  
+
   <title>Route</title>
-  
+
   <!-- Bootstrap core CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
-  
+
   <!-- Custom styles for this template -->
   <link href="css/start.css" rel="stylesheet">
-  
+
 </head>
 <body>
 
@@ -61,35 +61,35 @@
 
       <div class="row">
         <div class="info col-md-8">
-          <div class="row">
-            <span class="col-md-4">Level: </span>
-            <span id="level" class="col-md-8"></span>
+          <div class="row" style="padding-bottom: 5px">
+            <span class="col-md-1 text-muted">Level </span>
+            <span id="level" class="col-md-2 text-primary"></span>
+            <span class="col-md-1 text-muted">Length </span>
+            <span id="length" class="col-md-2 text-primary"></span>
           </div>
-          <div class="row">
-            <span class="col-md-4">Length: </span>
-            <span id="length" class="col-md-8"></span>
+
+          <div class="row" style="padding-bottom: 5px">
+            <span class="col-md-1 text-muted">Bolts </span>
+            <span id="bolts" class="col-md-2 text-primary"></span>
           </div>
-          <div class="row">
-            <span class="col-md-4">Bolts: </span>
-            <span id="bolts" class="col-md-8"></span>
+
+          <div id="desc" class="panel text-info" style="font-size: 16px; padding-bottom: 5px; padding-top: 5px; white-space: pre">
           </div>
-          <div class="row">
-            <span class="col-md-4">Description: </span>
-            <span id="desc" class="col-md-8"></span>
-          </div>
+
         </div>
+
         <div id="location" class="col-md-4">
 
         </div>
       </div>
 
       <div class="pics row">
-        
+
       </div>
     </div>
 
   </div>
-  
+
   <script src="js/d3.v3.min.js"></script>
   <script src="js/route.js"></script>
   <script>
