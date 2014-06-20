@@ -23,38 +23,46 @@ function showImages(ids) {
 }
 
 function addPhoto(input) {
-    upload(new FormData(document.getElementById("photo")));
+    upload(new FormData(document.getElementById("photo")), function(request) {
+        console.log("Success!");
+        var images = document.querySelector(".images");
+        var div = document.createElement("div");
+        var data = JSON.parse(request.responseText);
+        div.setAttribute("class", "pic col-md-3 img-wrap");
+        div.setAttribute("id", data.id);
+        var img = document.createElement("img");
+        img.setAttribute("src", "../api/image/" + data.id + "?size=0x300");
+        img.setAttribute("height", "200");
+        div.appendChild(img);
+        var overlay = document.createElement("div");
+        overlay.setAttribute("class", "img-overlay");
+        overlay.innerHTML = "<span><a class=\"x-close\" href=\"javascript:removeImage('" + data.id + "')\">x</a></span>";
+        div.appendChild(overlay);
+        images.insertBefore(div, document.querySelector(".img-add"));
+        imageIds.push(data.id);
+    });
 }
 
+function addOnePhoto(input) {
+    addPhoto(input);
+    d3.select(".img-add").style("display", "none");
+}
 
-function upload(form) {
+function upload(form, f) {
     var request = new XMLHttpRequest();
     request.open("POST", "/api/image", true);
     request.onload = function(event) {
         if (request.status == 200) {
             console.log("Success!");
-            var images = document.querySelector(".images");
-            var div = document.createElement("div");
-            var data = JSON.parse(request.responseText);
-            div.setAttribute("class", "pic col-md-3 img-wrap");
-            div.setAttribute("id", data.id);
-            var img = document.createElement("img");
-            img.setAttribute("src", "../api/image/" + data.id + "?size=0x300");
-            img.setAttribute("height", "200");
-            div.appendChild(img);
-            var overlay = document.createElement("div");
-            overlay.setAttribute("class", "img-overlay");
-            overlay.innerHTML = "<span><a class=\"x-close\" href=\"javascript:removeImage('" + data.id + "')\">x</a></span>";
-            div.appendChild(overlay);
-            images.insertBefore(div, document.querySelector(".img-add"));
-            imageIds.push(data.id);
+            f(request);
         } else {
             console.log("error code: ", request.status);
         }
     };
-
     request.send(form);
 }
+
+
 
 function removeImage(id) {
     var img = document.getElementById(id);
@@ -62,5 +70,9 @@ function removeImage(id) {
     var index = imageIds.indexOf(id);
     if (index != -1) {
         imageIds.splice(index, 1);
+    }
+
+    if (!imageIds || imageIds.length == 0) {
+        d3.select(".img-add").style("display", null);
     }
 }

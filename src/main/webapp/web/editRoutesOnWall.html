@@ -17,6 +17,8 @@
     <!-- Custom styles for this template -->
     <link href="css/start.css" rel="stylesheet">
 
+    <link href="css/image.css" rel="stylesheet">
+
     <style>
       .dropdown-menu {
           min-width: 0px;
@@ -59,6 +61,19 @@
 
       <div class="topo">
 
+        <div id="topo-add" style="display:none">
+          <form id="photo" action="#">
+            <label>Add Topo Photo</label>
+            <p></p>
+            <div class="images row">
+              <div class="col-md-3 img-add">
+                <img class="img-thumbnail" onclick="document.getElementById('file').click()" style="width: 200px; height: 200px;" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0ic2lsdmVyIi8+PHRleHQgdGV4dC1hbmNob3I9Im1pZGRsZSIgeD0iMTAwIiB5PSIxMDAiIHN0eWxlPSJmaWxsOmdyYXk7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LXNpemU6ODBweDtmb250LWZhbWlseTpBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4rPC90ZXh0Pjwvc3ZnPg==">
+                <input type="file" name="file" id="file" onchange="addOnePhoto(this)" style="display:none"/>
+              </div>
+            </div>
+          </form>
+        </div>
+
       </div>
       <div class="routes-list">
         <table class="table table-hover table-responsive">
@@ -79,10 +94,6 @@
           </tbody>
 
         </table>
-
-        <div class="alert alert-warning no-route" style="display:none">There is no routes info for this wall.</div>
-
-      </div>
 
       <div style="margin-bottom:40px; margin-top:40px">
         <button type="submit" class="btn btn-success btn-block btn-lg" onclick="submit()">Submit</button>
@@ -138,6 +149,7 @@
   <script src="js/d3.v3.min.js"></script>
   <script src="js/jquery-2.1.0.min.js"></script>
   <script src="js/bootstrap.min.js"/></script>
+  <script src="js/image.js"></script>
   <script src="js/topo.js"></script>
   <script src="js/editRoutesOnWall.js"></script>
 

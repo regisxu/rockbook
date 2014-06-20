@@ -20,6 +20,8 @@ function show() {
             var scale = 300 / height;
             svg.setAttribute("height", height * scale);
             svg.querySelector("#canvas").setAttribute("transform", "scale(" + scale + ")");
+        } else {
+            d3.select("#topo-add").style("display", null);
         }
 
         showRouteList();
@@ -30,7 +32,6 @@ function showRouteList() {
     var routes = d3.select(".routes-list");
 
     if (data.routes) {
-        routes.select(".no-route").style("display", "none");
 
         var route = d3.select(".routes-list tbody").selectAll("tr").data(data.routes, function(d) { return d.id; });
         route.enter()
@@ -41,8 +42,6 @@ function showRouteList() {
 
         route.exit().remove();
 
-    } else {
-        routes.select(".no-route").style("display", null);
     }
 }
 
