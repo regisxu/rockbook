@@ -43,7 +43,7 @@ function show() {
         }
 
         var routes = d3.select(".routes-list");
-        if (data.routes) {
+        if (data.routes && data.routes.length > 0) {
             var table = routes.append("table")
                 .attr("class", "table table-hover table-responsive");
             table.append("thead")
@@ -67,15 +67,17 @@ function show() {
                 .append("td")
                 .text(function(d) { return d; });
         } else {
-            routes.append("div")
-                .attr("class", "alert alert-warning")
-                .text("There is no routes info for this wall.");
+            d3.select("#btn-edit-routes").style("display", null);
         }
     });
 }
 
 function edit() {
     window.location = "editWall.html#" + id;
+}
+
+function editRoutes() {
+    window.location = "editRoutesOnWall.html#" + id;
 }
 
 function deleteWall() {

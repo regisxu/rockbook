@@ -54,21 +54,33 @@
   <div class="container">
     <div class="page-header">
       <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-8">
           <h1 class="name" >Wall</h1>
         </div>
-        <div class="col-md-1">
-          <h2><button class="btn btn-primary btn-block" type="button" onclick="javascript:edit()"><span class="glyphicon glyphicon-edit"></span> Edit</button><h2>
+        <div class="col-md-2 btn-group">
+          <h2>
+            <button class="btn btn-primary btn-block dropdown-toggle" type="button" data-toggle="dropdown">
+              <span class="glyphicon glyphicon-edit"></span> Edit <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="javascript:editRoutes()">Routes</a></li>
+              <li><a href="javascript:edit()">Info</a></li>
+            </ul>
+          </h2>
         </div>
-        <div class="col-md-1">
-          <h2><button class="btn btn-danger btn-block" type="button" onclick="javascript:deleteWall()"><span class="glyphicon glyphicon-trash"></span> Delete</button><h2>
+        <div class="col-md-2">
+          <h2>
+            <button class="btn btn-danger btn-block" type="button" onclick="javascript:deleteWall()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+          </h2>
         </div>
       </div>
     </div>
 
     <ul class="nav nav-tabs">
-	  <li class="active"><a data-target=".routes" data-toggle="tab">Routes</a></li>
-	  <li><a data-target=".detail" data-toggle="tab">Info</a></li>
+	  <li class="active">
+        <a data-target=".routes" data-toggle="tab">  Routes  </a>
+      </li>
+	  <li><a data-target=".detail" data-toggle="tab">  Info  </a></li>
 	</ul>
 
     <div class="tab-content">
@@ -92,6 +104,9 @@
         <div class="topo">
         </div>
         <div class="routes-list">
+        </div>
+        <div id="btn-edit-routes" style="margin-bottom:40px; margin-top:40px; display:none">
+          <button type="button" class="btn btn-default btn-block btn-lg" onclick="javascript:editRoutes()"><span class="glyphicon glyphicon-plus"></span> Add Routes</button>
         </div>
       </div>
     </div>
