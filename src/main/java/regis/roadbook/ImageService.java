@@ -4,6 +4,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -134,13 +136,29 @@ public class ImageService extends HttpServlet {
         String name = image.getString("name");
         String suffix = name.substring(name.lastIndexOf(".") + 1);
         String path = repo + "/" + buildFileName(image.getObjectId("_id").toString(), suffix);
-        saveImage(new File(base, path), op.get().getInputStream());
+        byte[] bs = toBytes(op.get().getInputStream());
+        BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(bs));
+        image.put("height", bufferedImage.getHeight());
+        image.put("width", bufferedImage.getWidth());
+        saveImage(new File(base, path), new ByteArrayInputStream(bs));
         image.put("path", path);
 
         BasicDBObject dbo = db.insert("image", image);
         response.setContentType("application/json");
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().println(Utils.json(dbo));
+    }
+
+    private byte[] toBytes(InputStream in) throws IOException {
+        try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+            byte[] bs = new byte[1024 * 4];
+            int count = 0;
+            while ((count = in.read(bs)) != -1) {
+                out.write(bs, 0, count);
+            }
+            out.flush();
+            return out.toByteArray();
+        }
     }
 
     private void saveImage(File file, InputStream in) throws IOException {

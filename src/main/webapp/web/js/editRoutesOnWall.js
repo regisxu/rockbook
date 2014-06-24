@@ -34,8 +34,8 @@ function addTopoPhoto(input) {
         data.topo = {};
         data.topo.pic = {};
         data.topo.pic.id = d.id;
-        data.topo.pic.height = "1024";
-        data.topo.pic.width = "768";
+        data.topo.pic.height = d.height;
+        data.topo.pic.width = d.width;
         topo = new Topo(data.topo);
         var svg = topo.svg;
         var height = svg.getAttribute("height");
