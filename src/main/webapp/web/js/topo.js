@@ -48,6 +48,9 @@ function Topo(data) {
     })();
 
     var refresh = function() {
+        if (!data.routes || data.routes.length == 0) {
+            return;
+        }
         var route = canvas.selectAll("g").data(data.routes);
         route.enter()
             .append("g")
@@ -99,33 +102,57 @@ function Topo(data) {
             return;
         }
 
-        var rout = document.querySelector(".route");
-        var path = rout.querySelector("path");
         var p = cursorPoint(event.clientX, event.clientY);
-        path.setAttribute("d", path.getAttribute("d") + " L " + p.x + " " + p.y + " " + " M " + p.x + " " + p.y);
-        var point = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        point.setAttribute("cx", p.x);
-        point.setAttribute("cy", p.y);
-        point.setAttribute("r", "4");
-        point.setAttribute("stroke", "red");
-        point.setAttribute("fill", "red");
-        rout.appendChild(point);
-
         current.bolts.push(p);
+
+        var route = canvas.select("#" + current.route);
+        if (route.empty()) {
+            route = canvas.append("g");
+            route.attr("id", current.route)
+                .attr("class", "route")
+                .attr("onclick", "topo.select(evt.currentTarget.id)")
+                .attr("onmouseover", "topo.highlight(evt.currentTarget.id)")
+                .attr("onmouseout", "topo.unhighlight(evt.currentTarget.id)");
+            route.append("svg:path")
+                .attr("stroke", "red")
+                .attr("stroke-width", "2")
+                .attr("d", function(d) { return "M " + p.x + " " + p.y;; });
+        } else {
+            var path = canvas.select("#" + current.route + " path");
+            path.attr("d", path.attr("d") + " L " + p.x + " " + p.y + " " + " M " + p.x + " " + p.y);
+        }
+
+        route.append("svg:circle")
+            .attr("cx", p.x)
+            .attr("cy", p.y)
+            .attr("r", "4")
+            .attr("stroke", "red")
+            .attr("fill", "red");
     };
 
     var finish = function() {
         if (!current) {
             return;
         }
+        if (!data.routes) {
+            data.routes = [];
+        }
+
+        var found = false;
         for (var i = 0; i < data.routes.length; ++i) {
             if (data.routes[i].id == current.route) {
                 for (var j = 0; j < current.bolts.length; ++j) {
                     data.routes[i].bolts.push(current.bolts[j]);
                 }
+                fount = true;
             }
         }
-
+        if (!found) {
+            var route = {};
+            route.id = current.route;
+            route.bolts = current.bolts;
+            data.routes.push(route);
+        }
         current = null;
     }
 

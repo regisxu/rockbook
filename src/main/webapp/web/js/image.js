@@ -23,11 +23,9 @@ function showImages(ids) {
 }
 
 function addPhoto(input) {
-    upload(new FormData(document.getElementById("photo")), function(request) {
-        console.log("Success!");
+    upload(new FormData(document.getElementById("photo")), function(data) {
         var images = document.querySelector(".images");
         var div = document.createElement("div");
-        var data = JSON.parse(request.responseText);
         div.setAttribute("class", "pic col-md-3 img-wrap");
         div.setAttribute("id", data.id);
         var img = document.createElement("img");
@@ -39,7 +37,6 @@ function addPhoto(input) {
         overlay.innerHTML = "<span><a class=\"x-close\" href=\"javascript:removeImage('" + data.id + "')\">x</a></span>";
         div.appendChild(overlay);
         images.insertBefore(div, document.querySelector(".img-add"));
-        imageIds.push(data.id);
     });
 }
 
@@ -54,7 +51,9 @@ function upload(form, f) {
     request.onload = function(event) {
         if (request.status == 200) {
             console.log("Success!");
-            f(request);
+            var data = JSON.parse(request.responseText);
+            f(data);
+            imageIds.push(data.id);
         } else {
             console.log("error code: ", request.status);
         }

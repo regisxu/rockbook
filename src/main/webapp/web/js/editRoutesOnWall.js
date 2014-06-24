@@ -28,6 +28,23 @@ function show() {
     });
 }
 
+function addTopoPhoto(input) {
+    upload(new FormData(document.getElementById("photo")), function(d) {
+        d3.select(".img-add").style("display", "none");
+        data.topo = {};
+        data.topo.pic = {};
+        data.topo.pic.id = d.id;
+        data.topo.pic.height = "1024";
+        data.topo.pic.width = "768";
+        topo = new Topo(data.topo);
+        var svg = topo.svg;
+        var height = svg.getAttribute("height");
+        var scale = 300 / height;
+        svg.setAttribute("height", height * scale);
+        svg.querySelector("#canvas").setAttribute("transform", "scale(" + scale + ")");
+    });
+}
+
 function showRouteList() {
     var routes = d3.select(".routes-list");
 
@@ -90,7 +107,12 @@ function done(route) {
     var form = document.getElementById("wall");
 
     var request = new XMLHttpRequest();
-    request.open("PUT", "/api/topo/" + t.id, true);
+    if (t.id) {
+        request.open("PUT", "/api/topo/" + t.id, true);
+    } else {
+        request.open("POST", "/api/topo/", true);
+    }
+
     request.setRequestHeader("Content-Type", "application/json");
     request.onload = function(event) {
         if (request.status == 200) {
