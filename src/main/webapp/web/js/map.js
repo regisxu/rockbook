@@ -61,11 +61,18 @@ function removeMarker(marker) {
 }
 
 function search(value) {
-    map.centerAndZoom(value, 15);
-    map.enableScrollWheelZoom();
-    map.addEventListener("tilesloaded", function(e) {
-        setMarker(map.getCenter().lng, map.getCenter().lat);
+    var local = new BMap.LocalSearch("È«¹ú", {
+        renderOptions: {
+            map: map,
+            panel : "result",
+            autoViewport: true,
+            selectFirstResult: false
+        }
     });
+    local.search(value);
+    // map.addEventListener("tilesloaded", function(e) {
+    //     setMarker(map.getCenter().lng, map.getCenter().lat);
+    // });
 }
 
 function currentPosition(callback, error) {
@@ -76,7 +83,7 @@ function currentPosition(callback, error) {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(locationSuccess, locationError,{
             enableHighAcuracy: true,
-            timeout: 15000,
+            timeout: 5000,
             maximumAge: 3000
         });
     } else {

@@ -3,38 +3,52 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
     <style type="text/css">
-      body, html {
+      body, html, .container {
       width: 100%;
       height: 100%;
-      overflow: hidden;
       margin:0;
       }
 
-      #search
-      {
-      width:80%;
-      float:left;
-      }
-
-      #map {
+      #result, #map {
       height:100%;
-      width:100%;
-      float:left;
-      border-right:2px solid #bcbcbc;
       }
     </style>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=gKuzyexnoAke3QEEf0qOuVj6"></script>
     <title>Select location in map</title>
   </head>
   <body>
-    <div id="search">
-      <input type="text" onkeypress="pressEnter(event, this.value)"/>
-    </div>
-    <br/>
-    <div id="map"></div>
+    <div class="container">
+
+      <div class="row" style="margin-bottom:10px">
+        <div class="col-md-3">
+          <div class="input-group" style="width: 100%">
+            <div id="search">
+              <input type="text" id="query" class="form-control" placeholder="Search" onkeypress="pressEnter(event, this.value)">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button" onclick="javascript:submitSearch()"><span class="glyphicon glyphicon-search"></span></button>
+              </span>
+            </div>
+          </div>
+      </div>
+      </div>
+
+      <div class="row" style="height:100%">
+        <div class="col-md-10" style="height:100%">
+          <div id="map"></div>
+        </div>
+        <div class="col-md-2">
+          <div id="result"></div>
+        </div>
+      </div>
 
     </div>
+
+    <script src="js/bootstrap.min.js"/></script>
     <script src="js/map.js"></script>
     <script>
       function pressEnter(e, value) {
@@ -43,6 +57,10 @@
           }
           search(value);
       }
+
+    function submitSearch() {
+        search(document.getElementById("query").value);
+    }
 
     </script>
   </body>
