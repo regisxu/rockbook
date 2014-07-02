@@ -14,6 +14,8 @@
   <!-- Bootstrap core CSS -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
 
+  <link rel="stylesheet" href="css/blueimp-gallery.min.css">
+
   <!-- Custom styles for this template -->
   <link href="css/start.css" rel="stylesheet">
 
@@ -83,13 +85,24 @@
         </div>
       </div>
 
-      <div class="pics row">
+      <div class="pics row" id="gallery">
 
       </div>
     </div>
 
   </div>
 
+  <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
+    <div class="slides"></div>
+    <h3 class="title"></h3>
+    <a class="prev">‹</a>
+    <a class="next">›</a>
+    <a class="close">×</a>
+    <a class="play-pause"></a>
+    <ol class="indicator"></ol>
+  </div>
+
+  <script src="js/blueimp-gallery.min.js"></script>
   <script src="js/d3.v3.min.js"></script>
   <script src="js/route.js"></script>
   <script>

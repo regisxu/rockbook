@@ -33,8 +33,16 @@ function show() {
             .append("img")
             .attr("src", function(d) { return "../api/image/" + d.id + "?size=0x400"; })
             .attr("height", 200);
-        }
 
+            document.getElementById("gallery").onclick = function (event) {
+                event = event || window.event;
+                var target = event.target || event.srcElement,
+                link = target.src ? target.parentNode : target,
+                options = {index: link, event: event},
+                links = this.getElementsByTagName("a");
+                blueimp.Gallery(links, options);
+            };
+        }
     });
 }
 
