@@ -59,7 +59,7 @@ public class WallServlet extends HttpServlet {
             dbObject.put("routes", routes);
         }
 
-        list = (BasicDBList) dbObject.remove("topos");
+        list = (BasicDBList) dbObject.remove("topo");
         if (list != null && !list.isEmpty()) {
             BasicDBObject routeQuery = new BasicDBObject("_id", new BasicDBObject("$in", list));
             BasicDBList routes = db.query("topo", routeQuery);
@@ -167,12 +167,13 @@ public class WallServlet extends HttpServlet {
             json.put("routes", rlist);
         }
 
-        if (json.get("topos") != null) {
-            List<String> tids = ((BasicDBList) ((BasicDBObject) json.remove("topo")).get("routes")).stream()
+        if (json.get("topo") != null) {
+            BasicDBObject topo = ((BasicDBObject) json.remove("topo"));
+            List<String> tids = ((BasicDBList) topo.get("routes")).stream()
                     .map(entry -> ((BasicDBObject) entry).getString("tid")).collect(Collectors.toList());
             BasicDBList tlist = new BasicDBList();
             tlist.addAll(tids);
-            json.put("topos", tlist);
+            json.put("topo", tlist);
         }
         return json;
     }

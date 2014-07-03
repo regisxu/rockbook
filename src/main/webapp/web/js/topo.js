@@ -144,7 +144,7 @@ function Topo(data) {
                 for (var j = 0; j < current.bolts.length; ++j) {
                     data.routes[i].bolts.push(current.bolts[j]);
                 }
-                fount = true;
+                found = true;
             }
         }
         if (!found) {

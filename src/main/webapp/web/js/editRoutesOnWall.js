@@ -117,6 +117,12 @@ function done(route) {
     request.onload = function(event) {
         if (request.status == 200) {
             console.log("Success!");
+            var response = JSON.parse(request.responseText);
+            for (var i = 0; i < data.topo.routes.length; ++i) {
+                if (data.topo.routes[i].id == route) {
+                    data.topo.routes[i].tid = response.id
+                }
+            }
         } else {
             console.log("error code: ", request.status);
         }
