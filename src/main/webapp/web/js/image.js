@@ -75,3 +75,29 @@ function removeImage(id) {
         d3.select(".img-add").style("display", null);
     }
 }
+
+function gallery(id) {
+
+    var control = d3.select("body")
+        .append("div")
+        .attr("id", "blueimp-gallery")
+        .attr("class", "blueimp-gallery blueimp-gallery-controls");
+
+    control.append("div").attr("class", "slides");
+    control.append("h3").attr("class", "title");
+    control.append("a").attr("class", "prev").text("\u2039");
+    control.append("a").attr("class", "next").text("\u203a");
+    control.append("a").attr("class", "close").text("\u00d7");
+    control.append("a").attr("class", "play-pause");
+    control.append("ol").attr("class", "indicator");
+
+    d3.select("#" + id)
+        .on("click", function (d) {
+            event = d3.event || window.event;
+            var target = event.target || event.srcElement,
+            link = target.src ? target.parentNode : target,
+            options = {index: link, event: event},
+            links = this.getElementsByTagName("a");
+            blueimp.Gallery(links, options);
+        });
+}

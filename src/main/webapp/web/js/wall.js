@@ -31,6 +31,8 @@ function show() {
             .append("img")
             .attr("src", function(d) { return "../api/image/" + d.id + "?size=0x400"; })
             .attr("height", 200);
+
+            gallery("gallery")
         }
 
         if (data.topo) {
