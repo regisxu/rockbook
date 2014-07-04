@@ -36,7 +36,12 @@ public class WallServlet extends HttpServlet {
         BasicDBObject json = new BasicDBObject();
         json.put("id", path);
 
-        BasicDBObject dbObject = (BasicDBObject) db.query("wall", Utils.dbo(json)).get(0);
+        BasicDBList list = db.query("wall", Utils.dbo(json));
+        if (list.isEmpty()) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
+        BasicDBObject dbObject = (BasicDBObject) list.get(0);
 
         enrich(dbObject);
         response.setContentType("application/json");
