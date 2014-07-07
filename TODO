@@ -20,3 +20,5 @@ type: sports, trad, top
 ** enhance edit features
 ** support multiple topo photo
 * Better supoort for mobile
+* Try dependency management for javascript
+** RequireJS, Bower, Grunt
