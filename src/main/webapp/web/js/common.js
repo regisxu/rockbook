@@ -1,7 +1,6 @@
 
 function async() {
 
-    var rt = {};
     var empty = function(params) {};
     var config = {
         "op" : null,
@@ -16,39 +15,38 @@ function async() {
 
     var set = function(name, value) {
         config[name] = value;
-        return rt;
     }
 
     var op = function(value) {
-        return set("op", value);
+        set("op", value);
     };
 
     var url = function(value) {
-        return set("url", value);
+        set("url", value);
     };
 
     var data = function(value) {
-        return set("data", value);
+        set("data", value);
     };
 
     var before = function(value) {
-        return set("before", value);
+        set("before", value);
     };
 
     var after = function(value) {
-        return set("after", value);
+        set("after", value);
     };
 
     var success = function(value) {
-        return set("success", value);
+        set("success", value);
     };
 
     var fail = function(value) {
-        return set("fail", value);
+        set("fail", value);
     };
 
     var anyway = function(value) {
-        return set("anyway", value);
+        set("anyway", value);
     };
 
     var send = function() {
@@ -81,14 +79,29 @@ function async() {
         config.after();
     };
 
-    rt.op = op;
-    rt.url = url;
-    rt.data = data;
-    rt.before = before;
-    rt.after = after;
-    rt.success = success;
-    rt.fail = fail;
-    rt.anyway = anyway;
-    rt.send = send;
-    return rt;
+    return chain({
+        op : op,
+        url : url,
+        data : data,
+        before : before,
+        after : after,
+        success : success,
+        fail : fail,
+        anyway : anyway,
+        send : send
+    }, ["op", "url", "data", "before", "after", "success", "fail", "anyway"]);
+}
+
+function chain(obj, fnames) {
+    for (var i = 0; i < fnames.length; ++i) {
+        obj[fnames[i]] = _chain(obj[fnames[i]], obj);
+    }
+    return obj;
+}
+
+function _chain(f, rt) {
+    return function() {
+        f.apply(this, arguments);
+        return rt;
+    };
 }
