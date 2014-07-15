@@ -56,10 +56,4 @@ function deleteRoute() {
         .send();
 }
 
-function parseId(url) {
-    var index = url.lastIndexOf("#");
-    if (index === -1) {
-        return "";
-    }
-    return index === -1 ? "" : url.substring(index + 1);
-}
+show();
