@@ -116,23 +116,8 @@
 <script src="js/bootstrap.min.js"/></script>
 <script src="js/d3.v3.min.js"></script>
 <script src="js/spin.min.js"></script>
+<script src="js/common.js"></script>
 <script src="js/image.js"></script>
 <script src="js/addWall.js"></script>
-
-<script>
-
-$("#myModal").on("shown.bs.modal", function(e) {
-
-    frames[0].showMap("map", position.longitude, position.latitude)
-
-});
-
-function ok() {
-    position.longitude = frames[0].current.getPosition().lng;
-    position.latitude = frames[0].current.getPosition().lat;
-    document.getElementById("location").value = "" + position.longitude + "," + position.latitude;
-}
-
-</script>
 
 </body>
