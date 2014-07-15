@@ -3,54 +3,37 @@ var data = {};
 var topo = null;
 
 function show() {
-    d3.json("/api/wall/" + id, function(error, json) {
-	    if (error) {
-            return console.warn(error);
-        }
+    async()
+        .op("GET")
+        .url("/api/wall/" + id)
+        .success(shwoData)
+        .send();
+}
 
-        data = json;
-        var title = document.querySelector(".name")
-        title.textContent = data["name"];
-        title.setAttribute("id", id);
+function showData(json) {
+    data = json;
+    var title = document.querySelector(".name")
+    title.textContent = data["name"];
+    title.setAttribute("id", id);
 
-        if (data.topo) {
-            topo = new Topo(data.topo);
-            var svg = topo.svg;
-            var height = svg.getAttribute("height");
-            var scale = 300 / height;
-            svg.setAttribute("height", height * scale);
-            svg.querySelector("#canvas").setAttribute("transform", "scale(" + scale + ")");
-        } else {
-            d3.select("#topo-add").style("display", null);
-        }
+    if (data.topo) {
+        topo = new Topo(data.topo);
+        var svg = topo.svg;
+        var height = svg.getAttribute("height");
+        var scale = 300 / height;
+        svg.setAttribute("height", height * scale);
+        svg.querySelector("#canvas").setAttribute("transform", "scale(" + scale + ")");
+    } else {
+        d3.select("#topo-add").style("display", null);
+    }
 
-        showRouteList();
-    });
+    showRouteList();
 }
 
 function addTopoPhoto(input) {
     d3.select(".img-add").style("display", "none");
     var sd = d3.select("#spinner").style("display", null);
-
-    var opts = {
-        lines: 10, // The number of lines to draw
-        length: 10, // The length of each line
-        width: 5, // The line thickness
-        radius: 15, // The radius of the inner circle
-        corners: 1, // Corner roundness (0..1)
-        rotate: 0, // The rotation offset
-        direction: 1, // 1: clockwise, -1: counterclockwise
-        color: '#000', // #rgb or #rrggbb or array of colors
-        speed: 1, // Rounds per second
-        trail: 60, // Afterglow percentage
-        shadow: false, // Whether to render a shadow
-        hwaccel: false, // Whether to use hardware acceleration
-        className: 'spinner', // The CSS class to assign to the spinner
-        zIndex: 2e9, // The z-index (defaults to 2000000000)
-        top: '50%', // Top position relative to parent
-        left: '50%' // Left position relative to parent
-    };
-    var spinner = new Spinner(opts);
+    var spinner = new Spinner(spinner_opts.image_loading);
     spinner.spin(sd.node());
 
     upload(new FormData(document.getElementById("photo")), function(d) {
@@ -89,43 +72,18 @@ function showRouteList() {
 }
 
 function submit() {
-    var form = document.getElementById("wall");
-
-    var request = new XMLHttpRequest();
-    request.open("PUT", "/api/wall", true);
-    request.setRequestHeader("Content-Type", "application/json");
-    request.onload = function(event) {
-        if (request.status == 200) {
-            console.log("Success!");
-            window.location.href = "/web/wall.html#" + JSON.parse(request.responseText).id;
-        } else {
-            console.log("error code: ", request.status);
-        }
-    };
-
-    request.send(JSON.stringify(data));
-
-    document.querySelector("#btn-submit").setAttribute("disabled", "disabled");
-    var opts = {
-        lines: 10, // The number of lines to draw
-        length: 8, // The length of each line
-        width: 3, // The line thickness
-        radius: 8, // The radius of the inner circle
-        corners: 1, // Corner roundness (0..1)
-        rotate: 0, // The rotation offset
-        direction: 1, // 1: clockwise, -1: counterclockwise
-        color: '#000', // #rgb or #rrggbb or array of colors
-        speed: 1, // Rounds per second
-        trail: 60, // Afterglow percentage
-        shadow: false, // Whether to render a shadow
-        hwaccel: false, // Whether to use hardware acceleration
-        className: 'spinner', // The CSS class to assign to the spinner
-        zIndex: 2e9, // The z-index (defaults to 2000000000)
-        top: '50%', // Top position relative to parent
-        left: '50%' // Left position relative to parent
-    };
-    var spinner = new Spinner(opts);
-    spinner.spin(document.querySelector(".btn-spinner"));
+    var spinner = new Spinner(spinner_opts.submit);
+    async()
+        .op("PUT")
+        .url("/api/wall")
+        .data(data)
+        .after(function() {
+            document.querySelector("#btn-submit").setAttribute("disabled", "disabled");
+            spinner.spin(document.querySelector(".btn-spinner"));
+        })
+        .success(function(result) { window.location.href = "/web/wall.html#" + result.id; })
+        .anyway(function() { spinner.stop(); })
+        .send();
 }
 
 function draw(route) {
@@ -151,31 +109,18 @@ function done(route) {
         }
     }
 
-    var form = document.getElementById("wall");
-
-    var request = new XMLHttpRequest();
-    if (t.id) {
-        request.open("PUT", "/api/topo/" + t.id, true);
-    } else {
-        request.open("POST", "/api/topo/", true);
-    }
-
-    request.setRequestHeader("Content-Type", "application/json");
-    request.onload = function(event) {
-        if (request.status == 200) {
-            console.log("Success!");
-            var response = JSON.parse(request.responseText);
+    async()
+        .op(t.id ? "PUT" : "POST")
+        .url("/api/topo/" + (t.id ? t.id : ""))
+        .data(t)
+        .success(function(response) {
             for (var i = 0; i < data.topo.routes.length; ++i) {
                 if (data.topo.routes[i].id == route) {
                     data.topo.routes[i].tid = response.id
                 }
             }
-        } else {
-            console.log("error code: ", request.status);
-        }
-    };
-
-    request.send(JSON.stringify(t));
+        })
+        .send();
 }
 
 function removeRoute(route) {
@@ -207,47 +152,32 @@ function add() {
     if (!document.querySelector(".routes-list .tr-edit")) {
         var row = document.querySelector(".template .tr-edit").cloneNode(true);
         document.querySelector(".routes-list tbody").appendChild(row);
-    }    
+    }
 }
 
 function addRoute() {
-    var request = new XMLHttpRequest();
-    request.open("POST", "/api/route", true);
-    request.setRequestHeader("Content-Type", "application/json");
     var route = {};
     route.name = document.querySelector(".td-edit .name").value;
     route.level = document.querySelector(".td-edit .level").value;
     route.length = document.querySelector(".td-edit .length").value;
     route.bolts = document.querySelector(".td-edit .bolts").value;
 
-
-    request.onload = function(event) {
-        if (request.status == 200) {
-            console.log("Success!");
-            removeRow();
-            var newRoute = JSON.parse(request.responseText);
+    async()
+        .op("POST")
+        .url("/api/route")
+        .data(route)
+        .success(function(newRoute) {
             if (!data.routes) {
                 data.routes = [];
             }
             data.routes.push(newRoute);
             showRouteList();
-        } else {
-            console.log("error code: ", request.status);
-        }
-    };
-
-    request.send(JSON.stringify(route));
-
+        })
+        .send();
 }
 
 function removeRow() {
     d3.select(".tr-edit").remove();
 }
 
-function parseId(url) {
-    var index = url.lastIndexOf("#");
-    if (index === -1) {
-        return "";
-    }
-    return index === -1 ? "" : url.substring(index + 1);
-}
+show();
