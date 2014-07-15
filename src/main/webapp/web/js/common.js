@@ -112,7 +112,7 @@ function async() {
 
             config.before();
             if ("PUT" == config.op || "POST" == config.op) {
-                request.send(JSON.stringify(data));
+                request.send(JSON.stringify(config.data));
             } else if ("GET" == config.op || "DELETE" == config.op) {
                 request.send();
             }
