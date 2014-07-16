@@ -76,6 +76,9 @@ function search(value, panel) {
             selectFirstResult: true
         }
     });
+
+    var spinner = new Spinner(spinner_opts.page_loading);
+    spinner.spin(document.getElementById(panel));
     local.search(value);
 }
 
