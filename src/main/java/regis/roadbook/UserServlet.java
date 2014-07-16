@@ -54,7 +54,7 @@ public class UserServlet extends HttpServlet {
         if (result.getString("email") != null) {
             response.addHeader("session", result.getString("session"));
         }
-        response.setContentType("application/json");
+        response.setContentType("application/json;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().println(Utils.json(result));
     }

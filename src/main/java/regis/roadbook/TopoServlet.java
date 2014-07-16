@@ -57,7 +57,7 @@ public class TopoServlet extends HttpServlet {
             return;
         }
 
-        response.setContentType("application/json");
+        response.setContentType("application/json;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().println(Utils.json(result));
     }
@@ -76,7 +76,7 @@ public class TopoServlet extends HttpServlet {
             return;
         }
         BasicDBObject dbo = db.insert("topo", Utils.dbo(json));
-        response.setContentType("application/json");
+        response.setContentType("application/json;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().println(Utils.json(dbo));
     }
@@ -101,7 +101,7 @@ public class TopoServlet extends HttpServlet {
 
         BasicDBObject value = Utils.dbo(json);
         BasicDBObject dbo = db.update("topo", value);
-        response.setContentType("application/json");
+        response.setContentType("application/json;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().println(Utils.json(dbo));
 

@@ -37,6 +37,8 @@ public class SearchServlet extends HttpServlet {
         query.put("name", qname);
         BasicDBList list = db.query(res, query);
         list.forEach(dbo -> Utils.json((BasicDBObject) dbo));
+        response.setContentType("application/json;charset=utf-8");
+        response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().println(list);
         return;
     }

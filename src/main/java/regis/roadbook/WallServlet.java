@@ -44,7 +44,7 @@ public class WallServlet extends HttpServlet {
         BasicDBObject dbObject = (BasicDBObject) list.get(0);
 
         enrich(dbObject);
-        response.setContentType("application/json");
+        response.setContentType("application/json;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().println(Utils.json(dbObject).toString());
     }
@@ -104,7 +104,7 @@ public class WallServlet extends HttpServlet {
         }
 
         BasicDBObject dbo = db.insert("wall", Utils.dbo(json));
-        response.setContentType("application/json");
+        response.setContentType("application/json;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().println(Utils.json(dbo));
     }
@@ -124,7 +124,7 @@ public class WallServlet extends HttpServlet {
 
         BasicDBObject simple = simplify(json);
         BasicDBObject dbo = db.update("wall", Utils.dbo(simple));
-        response.setContentType("application/json");
+        response.setContentType("application/json;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().println(Utils.json(dbo));
     }

@@ -40,7 +40,7 @@ public class RouteServlet extends HttpServlet {
             dbObject.put("images", images);
         }
 
-        response.setContentType("application/json");
+        response.setContentType("application/json;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().println(Utils.json(dbObject));
     }
@@ -59,7 +59,7 @@ public class RouteServlet extends HttpServlet {
             return;
         }
         BasicDBObject dbo = db.insert("route", Utils.dbo(json));
-        response.setContentType("application/json");
+        response.setContentType("application/json;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().println(Utils.json(dbo));
     }
@@ -84,7 +84,7 @@ public class RouteServlet extends HttpServlet {
 
         BasicDBObject value = Utils.dbo(json);
         BasicDBObject dbo = db.update("route", value);
-        response.setContentType("application/json");
+        response.setContentType("application/json;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().println(Utils.json(dbo));
     }
