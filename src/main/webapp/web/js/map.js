@@ -36,9 +36,7 @@ function show(id, x, y) {
     map = new BMap.Map(id);
     map.centerAndZoom(new BMap.Point(x,y), 15);
     map.enableScrollWheelZoom();
-    map.addEventListener("tilesloaded", function(e) {
-        setMarker(map.getCenter().lng, map.getCenter().lat);
-    })
+    setMarker(x, y);
     map.addEventListener("click", function(e){
         removeMarker(current)
         current = addMarker(e.point.lng, e.point.lat);
@@ -47,7 +45,7 @@ function show(id, x, y) {
 
 function setMarker(x, y) {
     removeMarker(current);
-    current = addMarker(map.getCenter().lng, map.getCenter().lat);
+    current = addMarker(x, y);
 }
 
 function addMarker(x, y) {
