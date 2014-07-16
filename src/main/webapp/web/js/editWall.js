@@ -17,7 +17,7 @@ function showData(json) {
 
     document.getElementById("name").value = data.name;
     if (data.location && data.location.longitude && data.location.latitude) {
-        document.getElementById("location").value = data.location.longitude + "," + data.location.latitude;
+        document.getElementById("location").value = data.location.latitude + "," + data.location.longitude;
         position.longitude = data.location.longitude;
         position.latitude = data.location.latitude;
     } else {

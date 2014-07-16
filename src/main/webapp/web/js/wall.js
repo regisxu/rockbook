@@ -21,8 +21,7 @@ function showData(json) {
     title.setAttribute("id", id);
     document.getElementById("desc").textContent = data.desc;
     if (data.location) {
-        var url = "http://api.map.baidu.com/staticimage?center=" + data.location.longitude + "," + data.location.latitude + "&width=300&height=200&zoom=13"
-        document.getElementById("location").innerHTML = "<img src=\"" + url + "\" height=\"150\" width=\"200\">";
+        showMapImage("#location", data.location, data.name);
     }
 
     if (data.images) {

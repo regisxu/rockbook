@@ -169,3 +169,15 @@ function parseId(url) {
     }
     return index === -1 ? "" : url.substring(index + 1);
 }
+
+function showMapImage(selector, location, desc) {
+        var url = "http://api.map.baidu.com/staticimage?center=" + location.longitude + "," + location.latitude + "&width=300&height=200&zoom=13" + "&markers=" + location.longitude + "," + location.latitude;
+        d3.select(selector)
+            .append("a")
+            .attr("target", "_blank")
+            .attr("href", "http://api.map.baidu.com/marker?location=" + location.latitude + "," + location.longitude + "&title=location" + "&content=" + encodeURIComponent(desc) + "&output=html&src=map")
+            .append("img")
+            .attr("src", url)
+            .attr("height", "150")
+            .attr("width", "200");
+}
