@@ -2,13 +2,18 @@ var map = {};
 var current = {};
 
 function showMap(id, x, y) {
+    var spinner = new Spinner(spinner_opts.page_loading);
+    spinner.spin(document.getElementById(id));
+
     if (!x || !y) {
         currentPosition(function(position) {
+            spinner.stop();
             var coords = position.coords;    
             x = coords.longitude;
             y = coords.latitude;
             show(id, x, y);
         }, function(error) {
+            spinner.stop();
             switch(error.code) {
             case error.TIMEOUT:
                 console.error("A timeout occured! Please try again!");
@@ -29,6 +34,7 @@ function showMap(id, x, y) {
         });
     } else {
         show(id, x, y);
+        spinner.stop();
     }
 }
 
