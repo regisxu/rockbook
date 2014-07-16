@@ -41,7 +41,10 @@ function showMap(id, x, y) {
 function show(id, x, y) {
     map = new BMap.Map(id);
     map.centerAndZoom(new BMap.Point(x,y), 15);
-    map.enableScrollWheelZoom();
+    map.addControl(new BMap.NavigationControl({ anchor: BMAP_ANCHOR_TOP_LEFT, type: BMAP_NAVIGATION_CONTROL_LARGE }));
+    map.addControl(new BMap.ScaleControl({ anchor: BMAP_ANCHOR_BOTTOM_LEFT }));
+    map.addControl(new BMap.MapTypeControl({ anchor: BMAP_ANCHOR_TOP_RIGHT }));
+
     setMarker(x, y);
     map.addEventListener("click", function(e){
         removeMarker(current)
