@@ -58,19 +58,16 @@ function removeMarker(marker) {
     map.removeOverlay(marker);
 }
 
-function search(value) {
+function search(value, panel) {
     var local = new BMap.LocalSearch("È«¹ú", {
         renderOptions: {
             map: map,
-            panel : "result",
+            panel : panel,
             autoViewport: true,
-            selectFirstResult: false
+            selectFirstResult: true
         }
     });
     local.search(value);
-    // map.addEventListener("tilesloaded", function(e) {
-    //     setMarker(map.getCenter().lng, map.getCenter().lat);
-    // });
 }
 
 function currentPosition(callback, error) {
