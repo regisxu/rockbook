@@ -14,7 +14,7 @@
       margin:0;
       }
 
-      #result, #map {
+      #map {
       height:100%;
       }
     </style>
@@ -24,21 +24,19 @@
   <body>
     <div class="container">
 
-      <div class="row" style="margin-bottom:10px;height:5%">
-        <div class="col-md-2">
-          <div class="input-group" style="width:100%">
-            <div id="search">
-              <input type="text" id="query" class="form-control" placeholder="Search" onkeypress="pressEnter(event, this.value)">
-              <span class="input-group-btn">
-                <button class="btn btn-default" type="button" onclick="javascript:submitSearch()"><span class="glyphicon glyphicon-search"></span></button>
-              </span>
-            </div>
+      <div class="row" style="margin-bottom:10px">
+        <div class="col-md-3" style="padding-left: 0px">
+          <div id = "search" class="input-group" style="width:100%">
+            <input type="text" id="query" class="form-control" placeholder="Search" onkeypress="pressEnter(event, this.value)">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button" onclick="javascript:submitSearch()"><span class="glyphicon glyphicon-search"></span></button>
+            </span>
           </div>
       </div>
       </div>
 
       <div class="row" style="height:90%">
-        <div id="result" class="col-md-2" style="display:none"></div>
+        <div id="result" class="col-md-3" style="display:none; padding-left: 0px"></div>
         <div id="map" class="col-md-12"></div>
       </div>
 
@@ -55,13 +53,13 @@
               return;
           }
           document.getElementById("result").style.display = null;
-          document.getElementById("map").setAttribute("class", "col-md-10");
+          document.getElementById("map").setAttribute("class", "col-md-9");
           search(value, "result");
       }
 
     function submitSearch() {
         document.getElementById("result").style.display = null;
-        document.getElementById("map").setAttribute("class", "col-md-10");
+        document.getElementById("map").setAttribute("class", "col-md-9");
         search(document.getElementById("query").value, "result");
     }
 
