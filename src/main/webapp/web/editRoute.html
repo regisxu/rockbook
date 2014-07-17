@@ -19,6 +19,11 @@
 
   <link href="css/image.css" rel="stylesheet">
 
+  <style>
+    #map:hover {
+        cursor: pointer;
+    }
+  </style>
 </head>
 <body>
 
@@ -74,6 +79,9 @@
             <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal">Map</button>
           </span>
           <input id="location" type="text" class="form-control">
+        </div>
+        <div>
+          <img id="map" data-toggle="modal" data-target="#myModal" width="200" height="150" alt="Load map failed" title="click to edit location">
         </div>
       </div>
       <div class="form-group">

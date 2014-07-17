@@ -16,13 +16,7 @@ function showData(json) {
     title.setAttribute("id", id);
 
     document.getElementById("name").value = data.name;
-    if (data.location && data.location.longitude && data.location.latitude) {
-        document.getElementById("location").value = data.location.longitude + "," + data.location.latitude;
-        position.longitude = data.location.longitude;
-        position.latitude = data.location.latitude;
-    } else {
-        document.getElementById("location").value = "";
-    }
+    showLocation(data.location);
 
     document.getElementById("level").value = data.level ? data.level : "";
     document.getElementById("length").value = data.length ? data.length : "";
@@ -33,6 +27,23 @@ function showData(json) {
         showImages(data.images.map(function(e) { return e.id; }));
     }
 
+}
+
+function showLocation(location) {
+    if (location && location.longitude && location.latitude) {
+        position.longitude = location.longitude;
+        position.latitude = location.latitude;
+
+        document.getElementById("location").value = "" + position.longitude + "," + position.latitude;
+        document.getElementById("map").setAttribute("src", "http://api.map.baidu.com/staticimage?center=" + position.longitude + "," + position.latitude + "&width=300&height=200&zoom=13&markers=" + position.longitude + "," + position.latitude);
+
+        document.getElementById("location").parentNode.style.display = "none";
+        document.getElementById("map").style.display = null;
+    } else {
+        document.getElementById("location").value = "";
+        document.getElementById("location").parentNode.style.display = null;
+        document.getElementById("map").style.display = "none";
+    }
 }
 
 function submit() {
@@ -62,9 +73,7 @@ function submit() {
 }
 
 function ok() {
-    position.longitude = frames[0].current.getPosition().lng;
-    position.latitude = frames[0].current.getPosition().lat;
-    document.getElementById("location").value = "" + position.longitude + "," + position.latitude;
+    showLocation({ longitude: frames[0].current.getPosition().lng, latitude: frames[0].current.getPosition().lat});
 }
 
 $("#myModal").on("shown.bs.modal", function(e) {

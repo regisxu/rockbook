@@ -171,6 +171,7 @@ function parseId(url) {
 }
 
 function showMapImage(selector, location, desc) {
+    if (location.longitude && location.latitude) {
         var url = "http://api.map.baidu.com/staticimage?center=" + location.longitude + "," + location.latitude + "&width=300&height=200&zoom=13" + "&markers=" + location.longitude + "," + location.latitude;
         d3.select(selector)
             .append("a")
@@ -180,4 +181,5 @@ function showMapImage(selector, location, desc) {
             .attr("src", url)
             .attr("height", "150")
             .attr("width", "200");
+    }
 }
