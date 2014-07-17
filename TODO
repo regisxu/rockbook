@@ -8,13 +8,12 @@
 ** show image name
 * Add more route info items
 type: sports, trad, top
+setter
 * Support Multi-pitchs
 * User jquery instead of d3?
 * Add paging
 * Support keywords search
-* make map thumbnail clickable
 * re-design detail section
-* Add loading page
 * enhance map
 * view/edit route topo
 ** enhance edit features
@@ -22,3 +21,10 @@ type: sports, trad, top
 * Better supoort for mobile
 * Try dependency management for javascript
 ** RequireJS, Bower, Grunt
+* History need to handle delete action.
+* Maybe add 'Area' concept?
+* Show wall's link on route page.
+* Show map image on edite page.
+* Add offline feature.
+* Apply a domain name.
+* Find icon for site.
