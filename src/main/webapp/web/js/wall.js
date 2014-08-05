@@ -32,7 +32,7 @@ function showData(json) {
             .append("div")
             .attr("class", "pic col-md-4")
             .append("a")
-            .attr("href", function(d) { return "../api/image/" + d.id; })
+            .attr("href", function(d) { return "../api/image/" + d.id + "?size=0x" + screen.height; })
             .attr("target", "_blank")
             .append("img")
             .attr("src", function(d) { return "../api/image/" + d.id + "?size=0x400"; })
