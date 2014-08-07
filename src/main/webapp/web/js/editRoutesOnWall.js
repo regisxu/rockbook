@@ -6,7 +6,7 @@ function show() {
     async()
         .op("GET")
         .url("/api/wall/" + id)
-        .success(shwoData)
+        .success(showData)
         .send();
 }
 
