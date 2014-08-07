@@ -113,7 +113,9 @@ function async() {
             var request = new XMLHttpRequest();
             request.open(config.op, config.url, true);
             if ("PUT" == config.op || "POST" == config.op) {
-                request.setRequestHeader("Content-Type", "application/json");
+                if (!(config.data instanceof FormData)) {
+                    request.setRequestHeader("Content-Type", "application/json");
+                }
             } else if ("GET" == config.op) {
                 request.setRequestHeader("Accept-Type", "application/json");
             }
@@ -131,7 +133,11 @@ function async() {
 
             config.before();
             if ("PUT" == config.op || "POST" == config.op) {
-                request.send(JSON.stringify(config.data));
+                if (config.data instanceof FormData) {
+                    request.send(config.data);
+                } else {
+                    request.send(JSON.stringify(config.data));
+                }
             } else if ("GET" == config.op || "DELETE" == config.op) {
                 request.send();
             }
