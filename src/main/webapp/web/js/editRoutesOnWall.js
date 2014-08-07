@@ -167,6 +167,7 @@ function addRoute() {
         .url("/api/route")
         .data(route)
         .success(function(newRoute) {
+            removeRow();
             if (!data.routes) {
                 data.routes = [];
             }
