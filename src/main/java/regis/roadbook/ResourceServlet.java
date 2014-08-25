@@ -28,6 +28,8 @@ public class ResourceServlet extends HttpServlet {
             switch (name) {
             case "wall":
                 return new WallService();
+            case "route":
+                return new RouteService();
             default:
                 throw new RuntimeException("Can't find service for resource " + name);
             }
