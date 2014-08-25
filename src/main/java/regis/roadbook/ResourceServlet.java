@@ -18,8 +18,9 @@ public class ResourceServlet extends HttpServlet {
 
     private static final String CONTENT_TYPE = "application/json;charset=utf-8";
 
-    public ResourceServlet() {
-        resource = getResource(getServletConfig().getInitParameter("resource"));
+    @Override
+    public void init() throws ServletException {
+        resource = getResource(getInitParameter("resource"));
     }
 
     private Resource getResource(String name) {
@@ -28,7 +29,7 @@ public class ResourceServlet extends HttpServlet {
             case "wall":
                 return new WallService();
             default:
-                return null;
+                throw new RuntimeException("Can't find service for resource " + name);
             }
         } catch (UnknownHostException e) {
             throw new RuntimeException(e);
