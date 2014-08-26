@@ -30,6 +30,8 @@ public class ResourceServlet extends HttpServlet {
                 return new WallService();
             case "route":
                 return new RouteService();
+            case "topo":
+                return new TopoService();
             default:
                 throw new RuntimeException("Can't find service for resource " + name);
             }
@@ -45,7 +47,13 @@ public class ResourceServlet extends HttpServlet {
             return;
         }
 
-        BasicDBObject obj = resource.get(getIdFromPath(request.getPathInfo()));
+        String id = getIdFromPath(request.getPathInfo());
+        if (id == null || id.trim().isEmpty()) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
+
+        BasicDBObject obj = resource.get(id);
         if (obj == null) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return;

@@ -8,8 +8,8 @@ public interface Resource {
 
     public BasicDBObject delete(String id);
 
-    public BasicDBObject put(BasicDBObject obj);
+    public BasicDBObject put(BasicDBObject json);
 
-    public BasicDBObject post(BasicDBObject obj);
+    public BasicDBObject post(BasicDBObject json);
 
 }
