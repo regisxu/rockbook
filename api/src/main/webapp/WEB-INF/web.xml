@@ -60,26 +60,26 @@
 
     <servlet-mapping>
         <servlet-name>WallServlet</servlet-name>
-        <url-pattern>/api/wall/*</url-pattern>
+        <url-pattern>/wall/*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>RouteServlet</servlet-name>
-        <url-pattern>/api/route/*</url-pattern>
+        <url-pattern>/route/*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>SearchServlet</servlet-name>
-        <url-pattern>/api/search/*</url-pattern>
+        <url-pattern>/search/*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>TopoServlet</servlet-name>
-        <url-pattern>/api/topo/*</url-pattern>
+        <url-pattern>/topo/*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>ImageService</servlet-name>
-        <url-pattern>/api/image/*</url-pattern>
+        <url-pattern>/image/*</url-pattern>
     </servlet-mapping>
 </web-app>
