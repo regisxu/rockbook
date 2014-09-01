@@ -1,4 +1,4 @@
-package regis.roadbook;
+package rocks.guidebook;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;

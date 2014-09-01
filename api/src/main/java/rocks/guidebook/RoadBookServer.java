@@ -1,4 +1,4 @@
-package regis.roadbook;
+package rocks.guidebook;
 
 
 public class RoadBookServer {

@@ -1,4 +1,4 @@
-package regis.roadbook;
+package rocks.guidebook;
 
 import java.io.BufferedReader;
 import java.io.IOException;
