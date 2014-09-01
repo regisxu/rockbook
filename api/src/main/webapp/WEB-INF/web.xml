@@ -8,7 +8,7 @@
     <servlet>
         <servlet-name>WallServlet</servlet-name>
         <display-name>WallServlet</display-name>
-        <servlet-class>regis.roadbook.ResourceServlet</servlet-class>
+        <servlet-class>rocks.guidebook.ResourceServlet</servlet-class>
         <init-param>
             <param-name>resource</param-name>
             <param-value>wall</param-value>
@@ -19,7 +19,7 @@
     <servlet>
         <servlet-name>RouteServlet</servlet-name>
         <display-name>RouteServlet</display-name>
-        <servlet-class>regis.roadbook.ResourceServlet</servlet-class>
+        <servlet-class>rocks.guidebook.ResourceServlet</servlet-class>
         <init-param>
             <param-name>resource</param-name>
             <param-value>route</param-value>
@@ -30,14 +30,14 @@
     <servlet>
         <servlet-name>SearchServlet</servlet-name>
         <display-name>SearchServlet</display-name>
-        <servlet-class>regis.roadbook.SearchServlet</servlet-class>
+        <servlet-class>rocks.guidebook.SearchServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
     <servlet>
         <servlet-name>TopoServlet</servlet-name>
         <display-name>TopoServlet</display-name>
-        <servlet-class>regis.roadbook.ResourceServlet</servlet-class>
+        <servlet-class>rocks.guidebook.ResourceServlet</servlet-class>
         <init-param>
             <param-name>resource</param-name>
             <param-value>topo</param-value>
@@ -48,7 +48,7 @@
     <servlet>
         <servlet-name>ImageService</servlet-name>
         <display-name>ImageService</display-name>
-        <servlet-class>regis.roadbook.ImageService</servlet-class>
+        <servlet-class>rocks.guidebook.ImageService</servlet-class>
         <load-on-startup>1</load-on-startup>
         <multipart-config>
             <location>images</location>
