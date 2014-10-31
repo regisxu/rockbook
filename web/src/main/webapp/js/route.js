@@ -52,11 +52,13 @@ function buildBreadcrumbs(data) {
         .append("a")
         .attr("href", "start.html")
         .text("Home");
-    breadcrumb
-        .append("li")
-        .append("a")
-        .attr("href", "wall.html#" + data.parent.wid)
-        .text(data.parent.name);
+    if (data.parent) {
+        breadcrumb
+            .append("li")
+            .append("a")
+            .attr("href", "wall.html#" + data.parent.wid)
+            .text(data.parent.name);
+    }
     breadcrumb
         .append("li")
         .attr("class", "active")
