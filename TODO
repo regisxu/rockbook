@@ -1,6 +1,8 @@
 -*- mode: outline -*-
 * Make navigate easier
 ** show levels
+*** better layout?
+* Handle 404 error
 * Add concept Area
 ** areas may have areas, walls and routes
 * Add statistic API
@@ -27,8 +29,6 @@ setter
 * Try dependency management for javascript
 ** RequireJS, Bower, Grunt
 * History need to handle delete action.
-* Show wall's link on route page.
-* Show map image on edite page.
 * Add offline feature.
 * Find icon for site.
 * start page show all routes on map.
