@@ -14,6 +14,8 @@ function show() {
 
 function showData(json) {
     data = json;
+    buildBreadcrumbs(data);
+    document.querySelector("title").textContent = data["name"];
     var title = document.querySelector(".name")
     title.textContent = data["name"];
     title.setAttribute("id", id);
@@ -41,6 +43,24 @@ function showData(json) {
 
         gallery("gallery");
     }
+}
+
+function buildBreadcrumbs(data) {
+    var breadcrumb = d3.select(".breadcrumb");
+    breadcrumb
+        .append("li")
+        .append("a")
+        .attr("href", "start.html")
+        .text("Home");
+    breadcrumb
+        .append("li")
+        .append("a")
+        .attr("href", "wall.html#" + data.parent.wid)
+        .text(data.parent.name);
+    breadcrumb
+        .append("li")
+        .attr("class", "active")
+        .text(data.name);
 }
 
 function edit() {

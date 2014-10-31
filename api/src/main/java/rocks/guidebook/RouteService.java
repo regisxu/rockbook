@@ -55,5 +55,14 @@ public class RouteService implements Resource {
             BasicDBList images = db.query("image", imageQuery);
             dbObject.put("images", images);
         }
+
+        BasicDBObject wallQuery = new BasicDBObject("routes", dbObject.getObjectId("_id"));
+        BasicDBList walls = db.query("wall", wallQuery);
+        if (!walls.isEmpty()) {
+            BasicDBObject parent = new BasicDBObject();
+            parent.put("wid", ((BasicDBObject) walls.get(0)).getObjectId("_id"));
+            parent.put("name", ((BasicDBObject) walls.get(0)).getString("name"));
+            dbObject.put("parent", parent);
+        }
     }
 }
