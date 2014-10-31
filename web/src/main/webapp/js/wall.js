@@ -16,6 +16,7 @@ function show() {
 
 function showData(json) {
     data = json;
+    buildBreadcrumbs(data);
     document.querySelector("title").textContent = data["name"];
     var title = document.querySelector(".name")
     title.textContent = data["name"];
@@ -78,6 +79,19 @@ function showData(json) {
     } else {
         d3.select("#btn-edit-routes").style("display", null);
     }
+}
+
+function buildBreadcrumbs(data) {
+    var breadcrumb = d3.select(".breadcrumb");
+    breadcrumb
+        .append("li")
+        .append("a")
+        .attr("href", "start.html")
+        .text("Home");
+    breadcrumb
+        .append("li")
+        .attr("class", "active")
+        .text(data.name);
 }
 
 function edit() {
