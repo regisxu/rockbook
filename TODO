@@ -1,5 +1,10 @@
 -*- mode: outline -*-
-
+* Make navigate easier
+** show levels
+* Add concept Area
+** areas may have areas, walls and routes
+* Add statistic API
+* Update page title
 * Enhance error handling
 * User management
 * Level management
@@ -22,10 +27,8 @@ setter
 * Try dependency management for javascript
 ** RequireJS, Bower, Grunt
 * History need to handle delete action.
-* Maybe add 'Area' concept?
 * Show wall's link on route page.
 * Show map image on edite page.
 * Add offline feature.
-* Apply a domain name.
 * Find icon for site.
 * start page show all routes on map.
