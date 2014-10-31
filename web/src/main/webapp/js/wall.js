@@ -16,6 +16,7 @@ function show() {
 
 function showData(json) {
     data = json;
+    document.querySelector("title").textContent = data["name"];
     var title = document.querySelector(".name")
     title.textContent = data["name"];
     title.setAttribute("id", id);
