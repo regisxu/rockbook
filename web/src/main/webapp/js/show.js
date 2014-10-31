@@ -21,7 +21,7 @@ function show(id, data) {
             template.querySelector(".route-bolts").textContent = "Bolts: " + (d.bolts ? d.bolts : "");
             template.querySelector(".route-desc").textContent = "Description: " + (d.desc ? d.desc : "");
             if (d.images && d.images.length > 0) {
-                template.querySelector(".route-cover").setAttribute("src", "../api/image/" + d.images[0] + "?size=300x300");
+                template.querySelector(".route-cover").setAttribute("src", api_location + "/image/" + d.images[0] + "?size=300x300");
             } else {
                 template.querySelector(".route-cover").setAttribute("src", emptyImage);
             }
@@ -41,7 +41,7 @@ function show(id, data) {
             template.querySelector(".wall-name").textContent = d.name;
             template.querySelector(".wall-desc").textContent = "Description: " + (d.desc ? d.desc : "");
             if (d.images && d.images.length > 0) {
-                template.querySelector(".wall-cover").setAttribute("src", "../api/image/" + d.images[0] + "?size=300x300");
+                template.querySelector(".wall-cover").setAttribute("src", api_location + "/image/" + d.images[0] + "?size=300x300");
             } else {
                 template.querySelector(".wall-cover").setAttribute("src", emptyImage);
             }

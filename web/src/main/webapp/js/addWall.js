@@ -11,13 +11,13 @@ function submit() {
 
     async()
         .op("POST")
-        .url("/api/wall")
+        .url(api_location + "/wall")
         .data(data)
         .after(function() {
             document.querySelector("#btn-submit").setAttribute("disabled", "disabled");
             spinner.spin(document.querySelector(".btn-spinner"));
         })
-        .success(function(result) { window.location.href = "/web/wall.html#" + result.id; })
+        .success(function(result) { window.location.href = "wall.html#" + result.id; })
         .anyway(function() { spinner.stop(); })
         .send();
 }

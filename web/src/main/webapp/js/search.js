@@ -27,7 +27,7 @@ function buildQuery(kw) {
 }
 
 function buildUrl(query) {
-    var url = "/api/search?";
+    var url = api_location + "/search?";
     for (var k in query) {
         url += k + "=" + query[k] + "&"
     }

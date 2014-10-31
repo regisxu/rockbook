@@ -5,7 +5,7 @@ function show() {
     var spinner = new Spinner(spinner_opts.page_loading);
     async()
         .op("GET")
-        .url("/api/route/" + id)
+        .url(api_location + "/route/" + id)
         .before(function() { spinner.spin(document.querySelector(".detail")); })
         .success(showData)
         .anyway(function() { spinner.stop(); })
@@ -35,10 +35,10 @@ function showData(json) {
             .append("div")
             .attr("class", "pic col-md-4")
             .append("a")
-            .attr("href", function(d) { return "../api/image/" + d.id + "?size=0x" + screen.height; })
+            .attr("href", function(d) { return api_location + "/image/" + d.id + "?size=0x" + screen.height; })
             .attr("target", "_blank")
             .append("img")
-            .attr("src", function(d) { return "../api/image/" + d.id + "?size=0x400"; })
+            .attr("src", function(d) { return api_location + "/image/" + d.id + "?size=0x400"; })
             .attr("height", 200);
 
         gallery("gallery");
@@ -69,9 +69,9 @@ function edit() {
 
 function deleteRoute() {
     async()
-        .url("/api/route/" + id)
+        .url(api_location + "/route/" + id)
         .op("DELETE")
-        .success(function() { window.location.href = "/web/start.html"; })
+        .success(function() { window.location.href = "start.html"; })
         .send();
 }
 

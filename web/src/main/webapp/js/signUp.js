@@ -9,11 +9,11 @@ function submit() {
 }
 
 function signUp(email, pwd) {
-    var url = "/api/user/signUp";
+    var url = api_location + "/user/signUp";
     var request = {};
 
     var request = new XMLHttpRequest();
-    request.open("POST", "/api/user/signUp", true);
+    request.open("POST", api_location + "/user/signUp", true);
     request.setRequestHeader("Content-Type", "application/json");
     var data = {};
     data.email = email;
@@ -28,7 +28,7 @@ function signUp(email, pwd) {
             } else {
                 document.cookie = "email=" + response.email + "; path=/web";
                 document.cookie = "session=" + response.session + "; path=/web";
-                window.location.href = "/web/start.html";
+                window.location.href = "start.html";
             }
         } else {
             console.log("error code: ", request.status);

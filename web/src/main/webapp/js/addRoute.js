@@ -25,13 +25,13 @@ function submit() {
 
     async()
         .op("POST")
-        .url("/api/route")
+        .url(api_location + "/route")
         .data(data)
         .after(function() {
             document.querySelector("#btn-submit").setAttribute("disabled", "disabled");
             spinner.spin(document.querySelector(".btn-spinner"));
         })
-        .success(function(result) { window.location.href = "/web/route.html#" + result.id; })
+        .success(function(result) { window.location.href = "route.html#" + result.id; })
         .anyway(function() { spinner.stop(); })
         .send();
 }

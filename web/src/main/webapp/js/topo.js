@@ -30,7 +30,7 @@ function Topo(data) {
             .attr("width", pic.width)
             .attr("height", pic.height)
             .append("svg:image")
-            .attr("xlink:href", "../api/image/" + pic.id)
+            .attr("xlink:href", api_location + "/image/" + pic.id)
             .attr("x", "0")
             .attr("y", "0")
             .attr("width", pic.width)

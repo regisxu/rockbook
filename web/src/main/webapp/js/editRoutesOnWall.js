@@ -5,7 +5,7 @@ var topo = null;
 function show() {
     async()
         .op("GET")
-        .url("/api/wall/" + id)
+        .url(api_location + "/wall/" + id)
         .success(showData)
         .send();
 }
@@ -75,13 +75,13 @@ function submit() {
     var spinner = new Spinner(spinner_opts.submit);
     async()
         .op("PUT")
-        .url("/api/wall")
+        .url(api_location + "/wall")
         .data(data)
         .after(function() {
             document.querySelector("#btn-submit").setAttribute("disabled", "disabled");
             spinner.spin(document.querySelector(".btn-spinner"));
         })
-        .success(function(result) { window.location.href = "/web/wall.html#" + result.id; })
+        .success(function(result) { window.location.href = "wall.html#" + result.id; })
         .anyway(function() { spinner.stop(); })
         .send();
 }
@@ -111,7 +111,7 @@ function done(route) {
 
     async()
         .op(t.id ? "PUT" : "POST")
-        .url("/api/topo/" + (t.id ? t.id : ""))
+        .url(api_location + "/topo/" + (t.id ? t.id : ""))
         .data(t)
         .success(function(response) {
             for (var i = 0; i < data.topo.routes.length; ++i) {
@@ -164,7 +164,7 @@ function addRoute() {
 
     async()
         .op("POST")
-        .url("/api/route")
+        .url(api_location + "/route")
         .data(route)
         .success(function(newRoute) {
             removeRow();

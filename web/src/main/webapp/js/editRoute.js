@@ -4,7 +4,7 @@ var position = {};
 function show() {
     async()
         .op("GET")
-        .url("/api/route/" + id)
+        .url(api_location + "/route/" + id)
         .success(showData)
         .send();
 }
@@ -61,13 +61,13 @@ function submit() {
 
     async()
         .op("PUT")
-        .url("/api/route")
+        .url(api_location + "/route")
         .data(data)
         .after(function() {
             document.querySelector("#btn-submit").setAttribute("disabled", "disabled");
             spinner.spin(document.querySelector(".btn-spinner"));
         })
-        .success(function(result) { window.location.href = "/web/route.html#" + result.id; })
+        .success(function(result) { window.location.href = "route.html#" + result.id; })
         .anyway(function() { spinner.stop(); })
         .send();
 }

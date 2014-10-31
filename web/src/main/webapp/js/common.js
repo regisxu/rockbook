@@ -1,3 +1,5 @@
+var api_location = "/api";
+
 var spinner_opts = {
     page_loading : {
         lines: 10, // The number of lines to draw

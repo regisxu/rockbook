@@ -10,7 +10,7 @@ function showImages(ids) {
         .attr("class", "pic col-md-3 img-wrap")
         .attr("id", function(d) { return d; });
     div.append("img")
-        .attr("src", function(d) { return "../api/image/" + d + "?size=0x300"; })
+        .attr("src", function(d) { return api_location + "/image/" + d + "?size=0x300"; })
         .attr("height", "200");
 
     div.append("div")
@@ -39,7 +39,7 @@ function addPhoto(input) {
         div.setAttribute("class", "pic col-md-3 img-wrap");
         div.setAttribute("id", data.id);
         var img = document.createElement("img");
-        img.setAttribute("src", "../api/image/" + data.id + "?size=0x300");
+        img.setAttribute("src", api_location + "/image/" + data.id + "?size=0x300");
         img.setAttribute("height", "200");
         div.appendChild(img);
         var overlay = document.createElement("div");
@@ -58,7 +58,7 @@ function addOnePhoto(input) {
 function upload(form, f) {
     async()
         .op("POST")
-        .url("/api/image")
+        .url(api_location + "/image")
         .data(form)
         .success(function(response) {
             f(response);

@@ -7,7 +7,7 @@ function show() {
 
     async()
         .op("GET")
-        .url("/api/wall/" + id)
+        .url(api_location + "/wall/" + id)
         .before(function() { spinner.spin(document.querySelector(".tab-content")); })
         .success(showData)
         .anyway(function() { spinner.stop(); })
@@ -34,10 +34,10 @@ function showData(json) {
             .append("div")
             .attr("class", "pic col-md-4")
             .append("a")
-            .attr("href", function(d) { return "../api/image/" + d.id + "?size=0x" + screen.height; })
+            .attr("href", function(d) { return api_location + "/image/" + d.id + "?size=0x" + screen.height; })
             .attr("target", "_blank")
             .append("img")
-            .attr("src", function(d) { return "../api/image/" + d.id + "?size=0x400"; })
+            .attr("src", function(d) { return api_location + "/image/" + d.id + "?size=0x400"; })
             .attr("height", 200);
 
         gallery("gallery")
@@ -104,9 +104,9 @@ function editRoutes() {
 
 function deleteWall() {
     async()
-        .url("/api/wall/" + id)
+        .url(api_location + "/wall/" + id)
         .op("DELETE")
-        .success(function() { window.location.href = "/web/start.html"; })
+        .success(function() { window.location.href = "start.html"; })
         .send();
 }
 
