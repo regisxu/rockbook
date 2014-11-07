@@ -1,13 +1,14 @@
 -*- mode: outline -*-
+
 * Make navigate easier
-** show levels
-*** better layout?
-* Handle 404 error
+** better breadcrumb layout?
 * Add concept Area
 ** areas may have areas, walls and routes
+** support areas topo
 * Add statistic API
-* Update page title
+* Update edit page title
 * Enhance error handling
+** Handle 404 error
 * User management
 * Level management
 * Refactor image script
