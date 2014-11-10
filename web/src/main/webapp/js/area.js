@@ -15,7 +15,7 @@ function show() {
 
 function showData(json) {
     data = json;
-    buildBreadcrumbs(data);
+    buildBreadcrumb(data);
     document.querySelector("title").textContent = data["name"];
     var title = document.querySelector(".name")
     title.textContent = data["name"];
@@ -67,33 +67,6 @@ function showData(json) {
     } else {
         d3.select("#btn-edit-subs").style("display", null);
     }
-}
-
-function buildBreadcrumbs(data) {
-    var breadcrumb = d3.select(".breadcrumb");
-
-    var leaf = breadcrumb
-        .append("li")
-        .attr("class", "last")
-        .text(data.name);
-    var last = leaf;
-    var parent = data.parent;
-    while (parent) {
-        breadcrumb.insert("li", ".last")
-            .attr("class", "last")
-            .append("a")
-            .attr("href", (parent.wid ? "wall.html#" + parent.wid : (parent.aid ? "area.html#" + parent.aid : null)))
-            .text(parent.name);
-        last.attr("class", null);
-        parent = parent.parent;
-    }
-
-    breadcrumb
-        .insert("li", ".last")
-        .append("a")
-        .attr("href", "start.html")
-        .text("Home");
-    leaf.attr("class", "active");
 }
 
 function edit() {
