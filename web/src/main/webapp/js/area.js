@@ -42,9 +42,9 @@ function showData(json) {
         gallery("gallery")
     }
 
-    var walls = d3.select(".walls-list");
-    if (data.walls && data.walls.length > 0) {
-        var table = walls.append("table")
+    var subs = data.walls ? (data.areas ? data.walls.concat(data.areas) : data.walls) : (data.areas ? data.areas : null);
+    if (subs && subs.length > 0) {
+        var table = d3.select(".subs-list").append("table")
             .attr("class", "table table-hover table-responsive");
         table.append("thead")
             .append("tr")
@@ -54,18 +54,18 @@ function showData(json) {
             .text(function(d) { return d; });
 
         var tbody = table.append("tbody");
-        var wall = tbody.selectAll("tr").data(data.walls);
-        wall.enter()
+        var sub = tbody.selectAll("tr").data(subs);
+        sub.enter()
             .append("tr")
-            .attr("class", "tr-wall")
+            .attr("class", "tr-sub")
             .attr("id", function(d) { return d.id; })
-            .attr("onclick", function(d) { return "clickWall('" + d.id + "')"; })
+            .attr("onclick", function(d) { return "clickSub('" + d.id + "')"; })
             .selectAll("td").data(function(d) { return [d.name]; })
             .enter()
             .append("td")
             .text(function(d) { return d; });
     } else {
-        d3.select("#btn-edit-walls").style("display", null);
+        d3.select("#btn-edit-subs").style("display", null);
     }
 }
 
@@ -94,12 +94,27 @@ function deleteArea() {
         .send();
 }
 
-function clickWall(wid) {
-    window.open("./wall.html#" + rid);
+function typeOf(id) {
+    for (var i = 0; data.walls && i < data.walls.length; ++i) {
+        if (id == data.walls[i].id) {
+            return "wall";
+        }
+    }
+
+    for (var i = 0; data.areas && i < data.areas.length; ++i) {
+        if (id == data.areas[i].id) {
+            return "area";
+        }
+    }
+    // TODO handle error
 }
 
-function clickArea(aid) {
-    window.open("./area.html#" + rid);
+function clickSub(id) {
+    if (typeOf(id) == "wall") {
+        window.open("./wall.html#" + id);
+    } else if (typeOf(id) == "area") {
+        window.open("./area.html#" + id);
+    }
 }
 
 show();

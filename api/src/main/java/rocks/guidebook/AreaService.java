@@ -48,7 +48,8 @@ public class AreaService implements Resource {
 
     @Override
     public BasicDBObject post(BasicDBObject json) {
-        BasicDBObject dbo = db.insert("area", Utils.dbo(json));
+        BasicDBObject simple = simplify(json);
+        BasicDBObject dbo = db.insert("area", Utils.dbo(simple));
         return dbo == null ? null : Utils.json(dbo);
     }
 

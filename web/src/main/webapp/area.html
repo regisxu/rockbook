@@ -20,7 +20,7 @@
   <link href="css/start.css" rel="stylesheet">
 
   <style type="text/css">
-    .tr-wall:hover {
+    .tr-sub:hover {
         cursor: pointer;
     }
 
@@ -71,14 +71,14 @@
               <span class="glyphicon glyphicon-edit"></span> Edit <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
-              <li><a href="javascript:editWalls()">Subs</a></li>
+              <li><a href="javascript:editSubs()">Subs</a></li>
               <li><a href="javascript:edit()">Info</a></li>
             </ul>
           </h2>
         </div>
         <div class="col-md-2">
           <h2>
-            <button class="btn btn-danger btn-block" type="button" onclick="javascript:deleteWall()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+            <button class="btn btn-danger btn-block" type="button" onclick="javascript:deleteArea()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
           </h2>
         </div>
       </div>
@@ -86,7 +86,7 @@
 
     <ul class="nav nav-tabs">
 	  <li class="active">
-        <a data-target=".walls" data-toggle="tab">  Subs  </a>
+        <a data-target=".subs" data-toggle="tab">  Subs  </a>
       </li>
 	  <li><a data-target=".detail" data-toggle="tab">  Info  </a></li>
 	</ul>
@@ -108,11 +108,11 @@
         </div>
       </div>
 
-      <div class="walls tab-pane active fade in">
-        <div class="walls-list">
+      <div class="Subs tab-pane active fade in">
+        <div class="subs-list">
         </div>
-        <div id="btn-add-walls" style="margin-bottom:40px; margin-top:40px; display:none">
-          <button type="button" class="btn btn-success btn-block btn-lg" onclick="javascript:editWalls()"><span class="glyphicon glyphicon-plus"></span> Add Walls</button>
+        <div id="btn-add-subs" style="margin-bottom:40px; margin-top:40px; display:none">
+          <button type="button" class="btn btn-success btn-block btn-lg" onclick="javascript:editSubs()"><span class="glyphicon glyphicon-plus"></span> Add Subs</button>
         </div>
       </div>
     </div>

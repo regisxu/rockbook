@@ -104,7 +104,7 @@ function removeSub(sub) {
 }
 
 function showSubList() {
-    var subs = data.walls ? (data.areas ? data.walls.concat(data.areas) : data.walls) : data.areas ? data.areas : null;
+    var subs = data.walls ? (data.areas ? data.walls.concat(data.areas) : data.walls) : (data.areas ? data.areas : null);
 
     if (subs) {
 
