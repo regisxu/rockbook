@@ -6,6 +6,17 @@
     <display-name>Rock Book Application</display-name>
 
     <servlet>
+        <servlet-name>AreaServlet</servlet-name>
+        <display-name>AreaServlet</display-name>
+        <servlet-class>rocks.guidebook.ResourceServlet</servlet-class>
+        <init-param>
+            <param-name>resource</param-name>
+            <param-value>area</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet>
         <servlet-name>WallServlet</servlet-name>
         <display-name>WallServlet</display-name>
         <servlet-class>rocks.guidebook.ResourceServlet</servlet-class>
@@ -57,6 +68,11 @@
             <file-size-threshold>8388608</file-size-threshold>
         </multipart-config>
     </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AreaServlet</servlet-name>
+        <url-pattern>/area/*</url-pattern>
+    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>WallServlet</servlet-name>

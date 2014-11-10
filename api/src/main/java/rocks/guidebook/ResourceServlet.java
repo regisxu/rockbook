@@ -14,6 +14,8 @@ import com.mongodb.util.JSON;
 
 public class ResourceServlet extends HttpServlet {
 
+    private static final long serialVersionUID = 3776847313918381639L;
+
     private Resource resource;
 
     private static final String CONTENT_TYPE = "application/json;charset=utf-8";
@@ -26,6 +28,8 @@ public class ResourceServlet extends HttpServlet {
     private Resource getResource(String name) {
         try {
             switch (name) {
+            case "area":
+                return new AreaService();
             case "wall":
                 return new WallService();
             case "route":
