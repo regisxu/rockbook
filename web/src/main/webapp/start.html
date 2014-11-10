@@ -59,6 +59,7 @@
                 <ul class="dropdown-menu dropdown-menu-left" role="menu">
                   <li><a href="javascript:selectRes('Route')">Route</a></li>
                   <li><a href="javascript:selectRes('Wall')">Wall</a></li>
+                  <li><a href="javascript:selectRes('Area')">Area</a></li>
                 </ul>
               </div><!-- /btn-group -->
 
@@ -76,6 +77,7 @@
               <span class="glyphicon glyphicon-plus"></span> Add <span class="caret"></span>
             </button>
             <ul class="dropdown-menu dropdown-menu-left" role="menu">
+              <li><a href="addArea.html">New Area</a></li>
               <li><a href="addWall.html">New Wall</a></li>
               <li><a href="addRoute.html">New Route</a></li>
             </ul>
@@ -135,6 +137,24 @@
 
     </div>
 
+    <div class="row" id="area-template" style="display:none">
+
+      <div class="col-md-2">
+        <a href="#" class="area-lnk" target="_blank">
+          <img class="img-responsive img-thumbnail area-cover">
+        </a>
+      </div>
+
+      <div class="col-md-10">
+        <div class="row">
+          <a class="area-lnk col-md-10" href="#" target="_blank"><span class="area-name" style="font-size:30px; top:0px" ></span></a>
+        </div>
+        <div class="row" style="margin-bottom:0px">
+          <span class="area-desc col-md-9"></span>
+        </div>
+      </div>
+
+    </div>
 
   </body>
   <script src="js/d3.v3.min.js"></script>

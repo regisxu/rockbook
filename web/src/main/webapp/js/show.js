@@ -48,5 +48,25 @@ function show(id, data) {
             list.appendChild(template);
             list.appendChild(document.createElement("hr"));
         }
+    } else if (res == "area") {
+        for (var i = 0; i < data.length; ++i) {
+            var d = data[i];
+            var template = document.getElementById("area-template").cloneNode(true);
+            template.setAttribute("id", d.id);
+            template.style.display = null;
+            var l = template.querySelectorAll(".area-lnk");
+            for (var j = 0; j < l.length; ++j) {
+                l.item(j).setAttribute("href", "area.html#" + d.id);
+            }
+            template.querySelector(".area-name").textContent = d.name;
+            template.querySelector(".area-desc").textContent = "Description: " + (d.desc ? d.desc : "");
+            if (d.images && d.images.length > 0) {
+                template.querySelector(".area-cover").setAttribute("src", api_location + "/image/" + d.images[0] + "?size=300x300");
+            } else {
+                template.querySelector(".area-cover").setAttribute("src", emptyImage);
+            }
+            list.appendChild(template);
+            list.appendChild(document.createElement("hr"));
+        }
     }
 }
