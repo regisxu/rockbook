@@ -1,9 +1,11 @@
 -*- mode: outline -*-
 
+* Change link to open in the same tab.
 * Make navigate easier
 ** better breadcrumb layout?
 * Add concept Area
 ** areas may have areas, walls and routes
+** enhance edit area functions
 ** support areas topo
 * Add statistic API
 * Update edit page title
@@ -33,3 +35,8 @@ setter
 * Add offline feature.
 * Find icon for site.
 * start page show all routes on map.
+* Search
+** Unified search
+** filters
+* Loation based navigation.
+* Add already existed route/wall/area to parent.
