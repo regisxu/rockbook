@@ -48,7 +48,7 @@ function showData(json) {
             .attr("class", "table table-hover table-responsive");
         table.append("thead")
             .append("tr")
-            .selectAll("th").data(["Name"])
+            .selectAll("th").data(["Name", "Type", "Description"])
             .enter()
             .append("th")
             .text(function(d) { return d; });
@@ -60,7 +60,7 @@ function showData(json) {
             .attr("class", "tr-sub")
             .attr("id", function(d) { return d.id; })
             .attr("onclick", function(d) { return "clickSub('" + d.id + "')"; })
-            .selectAll("td").data(function(d) { return [d.name]; })
+            .selectAll("td").data(function(d) { return [d.name, typeOf(d.id), d.desc]; })
             .enter()
             .append("td")
             .text(function(d) { return d; });
