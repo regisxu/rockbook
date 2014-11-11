@@ -82,27 +82,6 @@
 
       </form>
 
-      <div class="subs-list">
-        <table class="table table-hover table-responsive">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Type</th>
-              <th>Description</th>
-              <th>
-                <span onclick="javascript:add()" class="glyphicon glyphicon-plus">
-                </span>
-              </th>
-            </tr>
-          </thead>
-
-          <tbody>
-          </tbody>
-
-        </table>
-
-      </div>
-
       <div>
         <form id="photo" action="#">
           <label>Photos</label>
@@ -140,42 +119,6 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="template">
-
-      <table>
-        <tbody>
-          <tr class="tr-sub" id="">
-            <td class="td-name td-sub"></td>
-            <td class="td-type td-sub"></td>
-            <td class="td-desc td-sub"></td>
-
-            <td>
-              <span onclick="javascript:removeSub(this.parentNode.parentNode.id)" class="glyphicon glyphicon-remove">
-              </span>
-            </td>
-          </tr>
-
-          <tr class="tr-edit">
-            <td class="td-edit">
-              <input type="text" class="form-control name">
-            </td>
-            <td class="td-edit">
-              <input type="text" class="form-control type">
-            </td>
-            <td class="td-edit">
-              <input type="text" class="form-control desc">
-            </td>
-            <td class="td-edit">
-              <span onclick="javascript:addSub()" class="glyphicon glyphicon-ok">
-              </span>
-              <span onclick="javascript:removeRow(this.parentNode.parentNode.id)" class="glyphicon glyphicon-remove">
-              </span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
     </div>
 
   </body>
