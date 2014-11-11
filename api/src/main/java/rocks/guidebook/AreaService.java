@@ -73,7 +73,7 @@ public class AreaService implements Resource {
         list = (BasicDBList) dbo.get("areas");
         if (list != null && !list.isEmpty()) {
             BasicDBObject areaQuery = new BasicDBObject("_id", new BasicDBObject("$in", list));
-            BasicDBList areas = db.query("areas", areaQuery);
+            BasicDBList areas = db.query("area", areaQuery);
             dbo.put("areas", areas);
         }
 
