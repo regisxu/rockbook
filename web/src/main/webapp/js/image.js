@@ -100,8 +100,18 @@ function gallery(id) {
     d3.select("#" + id)
         .on("click", function (d) {
             event = d3.event || window.event;
-            var target = event.target || event.srcElement,
-            link = target.src ? target.parentNode : target,
+            var target = event.target || event.srcElement;
+
+            var link = null;
+            if (target.src) {
+                link = target.parentNode;
+            } else if (target.href) {
+                link = target;
+            }
+            if (!link) {
+                return;
+            }
+
             options = {index: link, event: event},
             links = this.getElementsByTagName("a");
             blueimp.Gallery(links, options);
