@@ -8,7 +8,7 @@ function show() {
     async()
         .op("GET")
         .url(api_location + "/wall/" + id)
-        .before(function() { spinner.spin(document.querySelector(".tab-content")); })
+        .before(function() { spinner.spin(document.querySelector(".detail")); })
         .success(showData)
         .anyway(function() { spinner.stop(); })
         .send();
