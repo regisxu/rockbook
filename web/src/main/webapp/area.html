@@ -84,38 +84,29 @@
       </div>
     </div>
 
-    <ul class="nav nav-tabs">
-	  <li class="active">
-        <a data-target=".subs" data-toggle="tab">  Subs  </a>
-      </li>
-	  <li><a data-target=".detail" data-toggle="tab">  Info  </a></li>
-	</ul>
-
-    <div class="tab-content">
-      <div class="detail tab-pane fade">
-        <div class="row">
-          <div class="info col-md-8" style="margin-top: 20px; margin-bottom: 20px;">
-            <div id="desc" class="panel text-info" style="font-size: 16px; padding-bottom: 5px; padding-top: 5px; white-space: pre">
-            </div>
-          </div>
-          <div id="location" class="col-md-4">
-
+    <div class="detail panel">
+      <div class="row">
+        <div class="info col-md-8" style="margin-top: 20px; margin-bottom: 20px;">
+          <div id="desc" class="panel text-info" style="font-size: 16px; padding-bottom: 5px; padding-top: 5px; white-space: pre">
           </div>
         </div>
+        <div id="location" class="col-md-4">
 
-        <div class="pics row" id="gallery">
-
-        </div>
-      </div>
-
-      <div class="subs tab-pane active fade in">
-        <div class="subs-list">
-        </div>
-        <div id="btn-add-subs" style="margin-bottom:40px; margin-top:40px; display:none">
-          <button type="button" class="btn btn-success btn-block btn-lg" onclick="javascript:editSubs()"><span class="glyphicon glyphicon-plus"></span> Add Subs</button>
         </div>
       </div>
     </div>
+
+    <div class="subs panel">
+      <h4>Sub Areas/Walls</h4>
+      <div class="subs-list">
+      </div>
+      <div id="btn-add-subs" style="margin-bottom:40px; margin-top:40px; display:none">
+        <button type="button" class="btn btn-success btn-block btn-lg" onclick="javascript:editSubs()"><span class="glyphicon glyphicon-plus"></span> Add Subs</button>
+      </div>
+    </div>
+
+    <h4>Gallery</h4>
+    <div class="pics row" id="gallery"></div>
 
   </div>
   
