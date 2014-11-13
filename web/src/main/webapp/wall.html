@@ -84,40 +84,31 @@
       </div>
     </div>
 
-    <ul class="nav nav-tabs">
-	  <li class="active">
-        <a data-target=".routes" data-toggle="tab">  Routes  </a>
-      </li>
-	  <li><a data-target=".detail" data-toggle="tab">  Info  </a></li>
-	</ul>
-
-    <div class="tab-content">
-      <div class="detail tab-pane fade">
-        <div class="row">
-          <div class="info col-md-8" style="margin-top: 20px; margin-bottom: 20px;">
-            <div id="desc" class="panel text-info" style="font-size: 16px; padding-bottom: 5px; padding-top: 5px; white-space: pre">
-            </div>
-          </div>
-          <div id="location" class="col-md-4">
-
+    <div class="detail panel">
+      <div class="row">
+        <div class="info col-md-8" style="margin-top: 20px; margin-bottom: 20px;">
+          <div id="desc" class="text-info" style="font-size: 16px; padding-bottom: 5px; padding-top: 5px; white-space: pre">
           </div>
         </div>
+        <div id="location" class="col-md-4">
 
-        <div class="pics row" id="gallery">
-
-        </div>
-      </div>
-
-      <div class="routes tab-pane active fade in">
-        <div class="topo" style="margin-top: 20px; margin-bottom: 20px">
-        </div>
-        <div class="routes-list">
-        </div>
-        <div id="btn-edit-routes" style="margin-bottom:40px; margin-top:40px; display:none">
-          <button type="button" class="btn btn-success btn-block btn-lg" onclick="javascript:editRoutes()"><span class="glyphicon glyphicon-plus"></span> Add Routes</button>
         </div>
       </div>
     </div>
+
+    <div class="routes panel">
+      <h4>Routes</h4>
+      <div class="topo" style="margin-top: 20px; margin-bottom: 20px">
+      </div>
+      <div class="routes-list">
+      </div>
+      <div id="btn-edit-routes" style="margin-bottom:40px; margin-top:40px; display:none">
+        <button type="button" class="btn btn-success btn-block btn-lg" onclick="javascript:editRoutes()"><span class="glyphicon glyphicon-plus"></span> Add Routes</button>
+      </div>
+    </div>
+
+    <h4>Gallery</h4>
+    <div class="pics row" id="gallery"></div>
 
   </div>
   
