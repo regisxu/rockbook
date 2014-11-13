@@ -25,7 +25,7 @@ function showData(json) {
         showMapImage("#location", data.location, data.name);
     }
 
-    if (data.images) {
+    if (data.images && data.images.length > 0) {
         var pic = d3.select(".pics")
             .selectAll(".pic")
             .data(data.images);
@@ -40,6 +40,8 @@ function showData(json) {
             .attr("height", 200);
 
         gallery("gallery")
+    } else {
+        d3.select("#gallery-container").style("display", "none");
     }
 
     var subs = data.walls ? (data.areas ? data.walls.concat(data.areas) : data.walls) : (data.areas ? data.areas : null);
@@ -65,7 +67,7 @@ function showData(json) {
             .append("td")
             .text(function(d) { return d; });
     } else {
-        d3.select("#btn-edit-subs").style("display", null);
+        d3.select(".subs").style("display", "none");
     }
 }
 

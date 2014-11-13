@@ -26,7 +26,7 @@ function showData(json) {
         showMapImage("#location", data.location, data.name);
     }
 
-    if (data.images) {
+    if (data.images && data.images.length > 0) {
         var pic = d3.select(".pics")
             .selectAll(".pic")
             .data(data.images);
@@ -41,6 +41,8 @@ function showData(json) {
             .attr("height", 200);
 
         gallery("gallery")
+    } else {
+        d3.select("#gallery-container").style("display", "none");
     }
 
     if (data.topo) {
