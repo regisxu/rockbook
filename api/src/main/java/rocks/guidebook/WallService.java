@@ -123,11 +123,13 @@ public class WallService implements Resource {
 
         if (json.get("topo") != null) {
             BasicDBObject topo = ((BasicDBObject) json.remove("topo"));
-            List<String> tids = ((BasicDBList) topo.get("routes")).stream()
-                    .map(entry -> ((BasicDBObject) entry).getString("tid")).collect(Collectors.toList());
-            BasicDBList tlist = new BasicDBList();
-            tlist.addAll(tids);
-            json.put("topo", tlist);
+            if (topo.get("routes") != null) {
+                List<String> tids = ((BasicDBList) topo.get("routes")).stream()
+                        .map(entry -> ((BasicDBObject) entry).getString("tid")).collect(Collectors.toList());
+                BasicDBList tlist = new BasicDBList();
+                tlist.addAll(tids);
+                json.put("topo", tlist);
+            }
         }
         return json;
     }

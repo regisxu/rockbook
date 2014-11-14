@@ -23,6 +23,10 @@
     #map:hover {
         cursor: pointer;
     }
+
+    .template {
+        display: none;
+    }
   </style>
 
 </head>
@@ -60,6 +64,12 @@
         <label>Wall Name *</label>
         <input id="name" type="text" class="form-control" placeholder="Enter name">
       </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea id="desc" class="form-control" rows="3" placeholder="Enter descriptioin"></textarea>
+      </div>
+
       <div class="form-group">
         <label>Location</label>
         <div class="input-group">
@@ -73,18 +83,55 @@
           <img id="map" data-toggle="modal" data-target="#myModal" width="200" height="150" alt="Load map failed" title="click to edit location">
         </div>
       </div>
-      <div class="form-group">
-        <label>Description</label>
-
-        <textarea id="desc" class="form-control" rows="3" placeholder="Enter descriptioin"></textarea>
-
-      </div>
 
     </form>
 
+    <label>Routes</label>
+    <div class="topo">
+
+      <div id="topo-add" style="display:none">
+        <form id="topo-photo" action="#">
+          <label>Add Topo Photo</label>
+          <p></p>
+          <div class="topo-images row">
+            <div class="col-md-3 topo-img-add">
+              <img class="img-thumbnail" onclick="document.getElementById('topo-file').click()" style="width: 200px; height: 200px;" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0ic2lsdmVyIi8+PHRleHQgdGV4dC1hbmNob3I9Im1pZGRsZSIgeD0iMTAwIiB5PSIxMDAiIHN0eWxlPSJmaWxsOmdyYXk7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LXNpemU6ODBweDtmb250LWZhbWlseTpBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4rPC90ZXh0Pjwvc3ZnPg==">
+              <input type="file" name="file" id="topo-file" onchange="addTopoPhoto(this)" style="display:none"/>
+            </div>
+
+            <div class="col-md-3 topo-img-add" id="spinner" style="height:200px; display:none">
+            </div>
+
+          </div>
+        </form>
+      </div>
+
+    </div> <!--topo-->
+
+    <div class="routes-list">
+      <table class="table table-hover table-responsive">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Level</th>
+            <th>Length</th>
+            <th>Bolts</th>
+            <th>
+              <span onclick="javascript:add()" class="glyphicon glyphicon-plus">
+              </span>
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+        </tbody>
+
+      </table>
+    </div> <!--routes-list-->
+
     <div>
       <form id="photo" action="#">
-        <label>photos</label>
+        <label>Photos</label>
         <p></p>
         <div class="images row">
           <div class="col-md-3 img-add">
@@ -121,12 +168,57 @@
     </div>
   </div>
 
+  <div class="template">
+
+    <table>
+      <tbody>
+        <tr class="tr-route" id="" onmouseover="topo.highlight(this.id)" onmouseout="topo.unhighlight(this.id)">
+          <td class="td-name td-route"></td>
+          <td class="td-level td-route"></td>
+          <td class="td-length td-route"></td>
+          <td class="td-bolts td-route"></td>
+
+          <td>
+            <span onclick="javascript:draw(this.parentNode.parentNode.id)" class="glyphicon glyphicon-pencil">
+            </span>
+            <span onclick="javascript:done(this.parentNode.parentNode.id)" class="glyphicon glyphicon-ok" style="display:none">
+            </span>
+            <span onclick="javascript:removeRoute(this.parentNode.parentNode.id)" class="glyphicon glyphicon-remove">
+            </span>
+          </td>
+        </tr>
+
+        <tr class="tr-edit">
+          <td class="td-edit">
+            <input type="text" class="form-control name">
+          </td>
+          <td class="td-edit">
+            <input type="text" class="form-control level">
+          </td>
+          <td class="td-edit">
+            <input type="text" class="form-control length">
+          </td>
+          <td class="td-edit">
+            <input type="text" class="form-control bolts">
+          </td>
+          <td class="td-edit">
+            <span onclick="javascript:addRoute()" class="glyphicon glyphicon-ok">
+            </span>
+            <span onclick="javascript:removeRow(this.parentNode.parentNode.id)" class="glyphicon glyphicon-remove">
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div> <!--template-->
+
 <script src="js/jquery-2.1.0.min.js"></script>
 <script src="js/bootstrap.min.js"/></script>
 <script src="js/d3.v3.min.js"></script>
 <script src="js/spin.min.js"></script>
 <script src="js/common.js"></script>
 <script src="js/image.js"></script>
+<script src="js/topo.js"></script>
 <script src="js/editWall.js"></script>
 
 </body>
