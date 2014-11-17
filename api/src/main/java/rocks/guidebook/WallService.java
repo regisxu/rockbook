@@ -131,6 +131,8 @@ public class WallService implements Resource {
                 json.put("topo", tlist);
             }
         }
+
+        json.removeField("parent");
         return json;
     }
 }

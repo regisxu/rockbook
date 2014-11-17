@@ -113,6 +113,7 @@ public class AreaService implements Resource {
             json.put("areas", rlist);
         }
 
+        json.removeField("parent");
         return json;
     }
 }
