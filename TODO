@@ -1,10 +1,10 @@
 -*- mode: outline -*-
 
+* put/post have to validate fields, only fields in schema could be added
 * Change link to open in the same tab.
 * Make navigate easier
 ** better breadcrumb layout?
 * Add concept Area
-** areas may have areas, walls and routes
 ** enhance edit area functions
 ** support areas topo
 * Add statistic API
