@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Edit route page">
+    <meta name="description" content="Edit area page">
     <meta name="author" content="Regis Xu">
     <!-- add site ico here -->
     <!--link rel="shortcut icon" href="../../assets/ico/favicon.ico"-->
@@ -21,7 +21,10 @@
 
     <style>
       #map:hover {
-      cursor: pointer;
+        cursor: pointer;
+      }
+      .template {
+        display: none;
       }
     </style>
 
@@ -82,6 +85,26 @@
 
       </form>
 
+      <div class="subs-list">
+        <table class="table table-hover table-responsive">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Description</th>
+              <th>
+                <span onclick="javascript:add()" class="glyphicon glyphicon-plus">
+                </span>
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+          </tbody>
+
+        </table>
+      </div>
+
       <div>
         <form id="photo" action="#">
           <label>photos</label>
@@ -119,6 +142,42 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="template">
+
+      <table>
+        <tbody>
+          <tr class="tr-sub" id="">
+            <td class="td-name td-sub"></td>
+            <td class="td-type td-sub"></td>
+            <td class="td-desc td-sub"></td>
+
+            <td>
+              <span onclick="javascript:removeSub(this.parentNode.parentNode.id)" class="glyphicon glyphicon-remove">
+              </span>
+            </td>
+          </tr>
+
+          <tr class="tr-edit">
+            <td class="td-edit">
+              <input type="text" class="form-control name">
+            </td>
+            <td class="td-edit">
+              <input type="text" class="form-control type">
+            </td>
+            <td class="td-edit">
+              <input type="text" class="form-control desc">
+            </td>
+            <td class="td-edit">
+              <span onclick="javascript:addSub()" class="glyphicon glyphicon-ok">
+              </span>
+              <span onclick="javascript:removeRow(this.parentNode.parentNode.id)" class="glyphicon glyphicon-remove">
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <script src="js/jquery-2.1.0.min.js"></script>
