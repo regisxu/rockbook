@@ -75,10 +75,6 @@ function edit() {
     window.location = "editArea.html#" + id;
 }
 
-function editSubs() {
-    window.location = "editSubsOnArea.html#" + id;
-}
-
 function deleteArea() {
     async()
         .url(api_location + "/area/" + id)
