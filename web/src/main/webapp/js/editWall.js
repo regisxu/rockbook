@@ -2,6 +2,7 @@ var id = parseId(location.href);
 var position = {};
 var data = {};
 var topo = null;
+var photos = null;
 
 function show() {
     async()
@@ -37,7 +38,8 @@ function showData(json) {
     showRouteList();
 
     if (data.images) {
-        showImages(data.images.map(function(e) { return e.id; }));
+        photos = new Images(data.images.map(function(e) { return e.id; }), ".images");
+        photos.show();
     }
 }
 
@@ -193,7 +195,7 @@ function submit() {
     data.name = document.getElementById("name").value;
     data.desc = document.getElementById("desc").value;
     data.location = position;
-    data.images = imageIds;
+    data.images = photos.ids;
 
     var spinner = new Spinner(spinner_opts.submit);
 
