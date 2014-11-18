@@ -1,9 +1,9 @@
-var addTemplate = "<form action='#'>\
-                     <img class='img-thumbnail' onclick='this.parentNode.querySelector(\"input\").click()' style='width: 200px; height: 200px;' src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0ic2lsdmVyIi8+PHRleHQgdGV4dC1hbmNob3I9Im1pZGRsZSIgeD0iMTAwIiB5PSIxMDAiIHN0eWxlPSJmaWxsOmdyYXk7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LXNpemU6ODBweDtmb250LWZhbWlseTpBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4rPC90ZXh0Pjwvc3ZnPg=='>\
-                     <input type='file' name='file' style='display:none'/>\
-</form>";
 
 function Images(data, selector) {
+    var addTemplate = "<form action='#'>\
+                         <img class='img-thumbnail' onclick='this.parentNode.querySelector(\"input\").click()' style='width: 200px; height: 200px;' src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0ic2lsdmVyIi8+PHRleHQgdGV4dC1hbmNob3I9Im1pZGRsZSIgeD0iMTAwIiB5PSIxMDAiIHN0eWxlPSJmaWxsOmdyYXk7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LXNpemU6ODBweDtmb250LWZhbWlseTpBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4rPC90ZXh0Pjwvc3ZnPg=='>\
+                         <input type='file' name='file' style='display:none'/>\
+                       </form>";
 
     var ids = data;
     var root = d3.select(selector);
@@ -36,47 +36,37 @@ function Images(data, selector) {
 
         pic.exit().remove();
 
-        if (!ids || ids.length == 0) {
-            root.select(".img-add").style("display", null);
-        }
     };
 
-    var upload = function (form, f) {
+    var showAdd = function(flag) {
+        root.select(".img-add").style("display", flag ? null : "none");
+    }
+
+    var upload = function (f) {
         async()
             .op("POST")
             .url(api_location + "/image")
-            .data(form)
+            .data(new FormData(root.select("form").node()))
             .success(function(response) {
                 f(response);
-                ids.push(response.id);
             })
             .send();
     };
 
-    var add = function(input) {
-        document.querySelector(selector + " .img-add").style.display = "none";
-        var images = document.querySelector(selector);
-        var div = document.createElement("div");
-        div.setAttribute("class", "pic col-md-3 img-wrap");
-        images.insertBefore(div, document.querySelector(selector + " .img-add"));
+    var add = function() {
+        root.select(".img-add").style("display", "none");
+        var load = root.insert("div", ".img-add")
+            .attr("class", "img-load col-md-3 img-wrap");
 
         var spinner = new Spinner(spinner_opts.image_loading);
-        spinner.spin(div);
+        spinner.spin(load.node());
 
-        upload(new FormData(document.getElementById("photo")), function(data) {
+        upload(function(data) {
             spinner.stop();
-            document.querySelector(selector + " .img-add").style.display = null;
-            div.setAttribute("class", "pic col-md-3 img-wrap");
-            div.setAttribute("id", data.id);
-            var img = document.createElement("img");
-            img.setAttribute("src", api_location + "/image/" + data.id + "?size=0x300");
-            img.setAttribute("height", "200");
-            div.appendChild(img);
-            var overlay = document.createElement("div");
-            overlay.setAttribute("class", "img-overlay");
-            overlay.innerHTML = "<span><a class=\"x-close\" href=\"javascript:removeImage('" + data.id + "')\">x</a></span>";
-            div.appendChild(overlay);
-            images.insertBefore(div, document.querySelector(selector + " .img-add"));
+            root.select(".img-load").remove();
+            ids.push(data.id);
+            show();
+            root.select(".img-add").style("display", null);
         });
     };
 
@@ -97,6 +87,7 @@ function Images(data, selector) {
     var result = {
         ids : ids,
         show : show,
+        showAdd : showAdd,
         add : add,
         addOnce : addOnce,
         remove : remove,
