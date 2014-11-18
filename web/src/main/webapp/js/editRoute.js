@@ -1,5 +1,7 @@
 var id = parseId(location.href);
 var position = {};
+var data = {};
+var photos = {};
 
 function show() {
     async()
@@ -10,11 +12,11 @@ function show() {
 }
 
 function showData(json) {
-    var data = json;
+    data = json;
     var title = document.querySelector(".name")
     title.textContent = "Edit route " + data.name;
     title.setAttribute("id", id);
-
+    document.getElementsByTagName("title")[0].textContent = "Edit route " + data.name;
     document.getElementById("name").value = data.name;
     showLocation(data.location);
 
@@ -23,9 +25,8 @@ function showData(json) {
     document.getElementById("bolts").value = data.bolts ? data.bolts : "";
     document.getElementById("desc").textContent = data.desc ? data.desc : "";
 
-    if (data.images) {
-        showImages(data.images.map(function(e) { return e.id; }));
-    }
+    photos = new Images(data.images ? data.images.map(function(e) { return e.id; }) : [], ".images");
+    photos.show();
 
 }
 
@@ -47,15 +48,13 @@ function showLocation(location) {
 }
 
 function submit() {
-    var data = {};
-    data.id = id;
     data.name = document.getElementById("name").value;
     data.desc = document.getElementById("desc").value;
     data.level = document.getElementById("level").value;
     data.length = document.getElementById("length").value;
     data.bolts = document.getElementById("bolts").value;
     data.location = position;
-    data.images = imageIds;
+    data.images = photos.ids;
 
     var spinner = new Spinner(spinner_opts.submit);
 

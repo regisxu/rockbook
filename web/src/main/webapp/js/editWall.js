@@ -2,7 +2,8 @@ var id = parseId(location.href);
 var position = {};
 var data = {};
 var topo = null;
-var photos = null;
+var photos = {};
+var topoPhoto = {};
 
 function show() {
     async()
@@ -17,7 +18,7 @@ function showData(json) {
     var title = document.querySelector(".name")
     title.textContent = "Edit wall " + data.name;
     title.setAttribute("id", id);
-
+    document.getElementsByTagName("title")[0].textContent = "Edit wall " + data.name;
     document.getElementById("name").value = data.name;
 
     showLocation(data.location);
@@ -33,14 +34,14 @@ function showData(json) {
         svg.querySelector("#canvas").setAttribute("transform", "scale(" + scale + ")");
     } else {
         d3.select("#topo-add").style("display", null);
+        topoPhoto = new Images([], ".topo-images");
     }
 
     showRouteList();
 
-    if (data.images) {
-        photos = new Images(data.images.map(function(e) { return e.id; }), ".images");
-        photos.show();
-    }
+    photos = new Images(data.images ? data.images.map(function(e) { return e.id; }) : [], ".images");
+    photos.show();
+
 }
 
 function showLocation(location) {
@@ -65,7 +66,7 @@ function addTopoPhoto(input) {
     var spinner = new Spinner(spinner_opts.image_loading);
     spinner.spin(sd.node());
 
-    upload(new FormData(document.getElementById("topo-photo")), function(d) {
+    topoPhoto.upload(new FormData(document.getElementById("topo-photo")), function(d) {
         d3.select("#spinner").style("display", "none");
         spinner.stop();
 

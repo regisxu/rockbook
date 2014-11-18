@@ -16,7 +16,7 @@ function showData(json) {
     var title = document.querySelector(".name")
     title.textContent = "Edit area " + data.name;
     title.setAttribute("id", id);
-
+    document.getElementsByTagName("title")[0].textContent = "Edit area " + data.name;
     document.getElementById("name").value = data.name;
 
     showLocation(data.location);
@@ -25,10 +25,8 @@ function showData(json) {
 
     showSubList();
 
-    if (data.images) {
-        photos = new Images(data.images.map(function(e) { return e.id; }), ".images");
-        photos.show();
-    }
+    photos = new Images(data.images ? data.images.map(function(e) { return e.id; }) : [], ".images");
+    photos.show();
 }
 
 function showSubList() {

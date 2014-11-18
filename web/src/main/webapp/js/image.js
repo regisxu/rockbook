@@ -82,7 +82,8 @@ function Images(data, selector) {
         show : show,
         add : add,
         addOnce : addOnce,
-        remove : remove
+        remove : remove,
+        upload : upload
     };
     document.querySelector(selector).__images__ = result;
     return result;
