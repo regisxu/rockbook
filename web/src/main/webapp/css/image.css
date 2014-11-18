@@ -39,4 +39,5 @@
 }
 .x-close:hover {
     text-decoration: none;
+    cursor: pointer;
 }
