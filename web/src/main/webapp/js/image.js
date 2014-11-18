@@ -97,14 +97,6 @@ function Images(data, selector) {
     return result;
 }
 
-function addPhoto(input) {
-    input.parentNode.parentNode.__images__.add(input);
-}
-
-function removeImage(id) {
-    document.querySelector("#" + id).parentNode.__images__.remove(id);
-}
-
 function gallery(id) {
 
     var control = d3.select("body")
