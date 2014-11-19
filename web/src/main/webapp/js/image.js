@@ -5,7 +5,7 @@ function Images(data, selector) {
                          <input type='file' name='file' style='display:none'/>\
                        </form>";
 
-    var ids = data;
+    var ids = data ? data : [];
     var root = d3.select(selector);
 
     var imgAdd = root.append("div")
