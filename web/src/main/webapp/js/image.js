@@ -8,27 +8,58 @@ function Images(data, selector) {
     var ids = data ? data : [];
     var root = d3.select(selector);
 
-    var imgAdd = root.append("div")
-        .attr("class", "col-md-3 img-add")
-        .html(addTemplate);
-    var imgLoad = root.append("div")
-        .attr("class", "img-load col-md-3 img-wrap")
-        .style("display", "none");
-    var spinner = new Spinner(spinner_opts.image_loading);
+    var adder = (function() {
+        var obj = root.append("div")
+            .attr("class", "col-md-3 img-add")
+            .html(addTemplate);
 
-    imgAdd.select("input")
-        .on("change", function() {
-            imgLoad.style("display", null);
-            imgAdd.style("display", "none");
-            spinner.spin(imgLoad.node());
+        var display = function(flag) {
+            obj.style("display", flag ? null : "none");
+        };
+
+        var onchange = function() {
+            loading.display(true);
+            obj.style("display", "none");
 
             upload(function(data) {
-                spinner.stop();
-                imgLoad.style("display", "none");
-                imgAdd.style("display", null);
+                loading.display(false);
+                obj.style("display", null);
                 add(data.id);
             });
-        });
+        };
+
+
+        var rt = {
+            display : display,
+            onchange : onchange
+        };
+
+        obj.select("input").on("change", function() { rt.onchange(); });
+
+        return rt;
+
+    })();
+
+    var loading = (function() {
+        var obj = root.append("div")
+            .attr("class", "img-load col-md-3 img-wrap")
+            .style("display", "none");
+        var spinner = new Spinner(spinner_opts.image_loading);
+
+        var display = function(flag) {
+            if (flag) {
+                obj.style("display", null);
+                spinner.spin(obj.node());
+            } else {
+                obj.style("display", "none");
+                spinner.stop();
+            }
+        };
+
+        return {
+            display : display
+        };
+    })();
 
     var show = function() {
 
@@ -51,10 +82,6 @@ function Images(data, selector) {
         pic.exit().remove();
 
     };
-
-    var showAdd = function(flag) {
-        imgAdd.style("display", flag ? null : "none");
-    }
 
     var upload = function (f) {
         async()
@@ -84,10 +111,11 @@ function Images(data, selector) {
     var result = {
         ids : ids,
         show : show,
-        showAdd : showAdd,
         add : add,
         remove : remove,
-        upload : upload
+        upload : upload,
+        adder : adder,
+        loading : loading
     };
     document.querySelector(selector).__images__ = result;
     return result;

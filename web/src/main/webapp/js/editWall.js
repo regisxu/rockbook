@@ -35,9 +35,8 @@ function showData(json) {
     } else {
         d3.select("#topo-add").style("display", null);
         topoPhoto = new Images([], ".topo-images");
+        topoPhoto.adder.onchange = addTopoPhoto;
         topoPhoto.show();
-        d3.select(".topo-images").select("input")
-            .on("change", addTopoPhoto);
     }
 
     showRouteList();
@@ -63,17 +62,12 @@ function showLocation(location) {
     }
 }
 
-function addTopoPhoto(input) {
-    topoPhoto.showAdd(false);
-    var load = d3.select(".topo-images").insert("div", ".img-add")
-        .attr("class", "img-load col-md-3 img-wrap");
-
-    var spinner = new Spinner(spinner_opts.image_loading);
-    spinner.spin(load.node());
+function addTopoPhoto() {
+    topoPhoto.loading.display(true);
+    topoPhoto.adder.display(false);
 
     topoPhoto.upload(function(d) {
-        spinner.stop();
-        d3.select(".topo-images").select(".img-load").remove();
+        topoPhoto.loading.display(false);
 
         data.topo = {};
         data.topo.pic = {};
