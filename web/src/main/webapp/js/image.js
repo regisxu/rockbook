@@ -11,9 +11,23 @@ function Images(data, selector) {
     var imgAdd = root.append("div")
         .attr("class", "col-md-3 img-add")
         .html(addTemplate);
+    var imgLoad = root.append("div")
+        .attr("class", "img-load col-md-3 img-wrap")
+        .style("display", "none");
+    var spinner = new Spinner(spinner_opts.image_loading);
+
     imgAdd.select("input")
         .on("change", function() {
-            add(null);
+            imgLoad.style("display", null);
+            imgAdd.style("display", "none");
+            spinner.spin(imgLoad.node());
+
+            upload(function(data) {
+                spinner.stop();
+                imgLoad.style("display", "none");
+                imgAdd.style("display", null);
+                add(data.id);
+            });
         });
 
     var show = function() {
@@ -39,7 +53,7 @@ function Images(data, selector) {
     };
 
     var showAdd = function(flag) {
-        root.select(".img-add").style("display", flag ? null : "none");
+        imgAdd.style("display", flag ? null : "none");
     }
 
     var upload = function (f) {
@@ -53,26 +67,9 @@ function Images(data, selector) {
             .send();
     };
 
-    var add = function() {
-        root.select(".img-add").style("display", "none");
-        var load = root.insert("div", ".img-add")
-            .attr("class", "img-load col-md-3 img-wrap");
-
-        var spinner = new Spinner(spinner_opts.image_loading);
-        spinner.spin(load.node());
-
-        upload(function(data) {
-            spinner.stop();
-            root.select(".img-load").remove();
-            ids.push(data.id);
-            show();
-            root.select(".img-add").style("display", null);
-        });
-    };
-
-    var addOnce = function(input) {
-        add(input);
-        d3.select(selector + " .img-add").style("display", "none");
+    var add = function(id) {
+        ids.push(id);
+        show();
     };
 
     var remove = function(id) {
@@ -89,7 +86,6 @@ function Images(data, selector) {
         show : show,
         showAdd : showAdd,
         add : add,
-        addOnce : addOnce,
         remove : remove,
         upload : upload
     };
